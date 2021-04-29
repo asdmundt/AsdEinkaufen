@@ -89,13 +89,3 @@ ASDEPageAdmin >> renderAddButtonsOn: html [
 				top;
 				size: 1 ]
 ]
-
-{ #category : #rendering }
-ASDEPageAdmin >> renderAddCollectionButtonOn: html [
-	self subclassResponsibility
-]
-
-{ #category : #rendering }
-ASDEPageAdmin >> renderSelfNewButtonOn: html [
-self subclassResponsibility
-]

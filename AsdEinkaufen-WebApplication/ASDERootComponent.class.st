@@ -120,6 +120,11 @@ ASDERootComponent >> defaultHeader [
 	^ ASDEHeader new
 ]
 
+{ #category : #accessing }
+ASDERootComponent >> development [ 
+^self class development 
+]
+
 { #category : #updating }
 ASDERootComponent >> displayInstanceOf: aComponentClass [
 	self componentToDisplay: (self componentInstances at: aComponentClass ifAbsentPut: [ aComponentClass new ])
@@ -133,6 +138,11 @@ ASDERootComponent >> footer [
 { #category : #accessing }
 ASDERootComponent >> footer: aComponent [
 	footer := aComponent
+]
+
+{ #category : #actions }
+ASDERootComponent >> goToLoginView [
+	self displayInstanceOf: ASDELoginPage
 ]
 
 { #category : #accessing }
@@ -184,14 +194,14 @@ ASDERootComponent >> renderContentOn: html [
 				class: 'mdl-color-text--grey-600';
 				with: [ html mdlGrid
 						noSpacing;
-												style: 'height: 95%;';
+						style: 'height: 90%; ';
 						with: [ html mdlCell
 								stretch;
-								desktopOffset: 4;
-								tabletOffset: 2;
+							"	desktopOffset: 1;
+								tabletOffset: 2;"
 								"phoneOffset: 1;"
-									desktopSize: 6;
-								tabletSize: 4;
+									desktopSize: 12;
+								"tabletSize: 6;"
 								"phoneSize: 1;"
 									with: [ html render: self componentToDisplay ] ].
 					html render: self footer ] ].
@@ -209,10 +219,8 @@ ASDERootComponent >> tryConnectionWithLogin: login andPassword: password [
 
 			"arg logged: true."
 			self session model addLoggedUser: arg.
-			self session first: true.
 			arg isAdmin
-				ifTrue: [ arg password = 'pwd'
-						]
+				ifTrue: [ arg password = 'pwd' ]
 				ifFalse: [ self goToOverviewView ] ]
 		ifNil: [ self session loginError.
 			self goToLoginView ]

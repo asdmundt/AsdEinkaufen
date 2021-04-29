@@ -15,6 +15,13 @@ Class {
 	#category : #'AsdEinkaufen-Core-Model'
 }
 
+{ #category : #'instance creation' }
+ASDEAdresse class >> bez: aBez [
+	^ self new
+		bez: aBez;
+		yourself
+]
+
 { #category : #accessing }
 ASDEAdresse >> bemerkung [
 	^ bemerkung
@@ -35,6 +42,107 @@ ASDEAdresse >> bez: anObject [
 	bez := anObject
 ]
 
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionBemerkung [
+	<magritteDescription>
+	^ MAStringDescription new
+		label: 'Bemerkung';
+		accessor: #bemerkung;
+		priority: 8;
+		required: false;
+		
+		comment: 'Hier können Sie eine Bemerkung eingeben';
+		componentClass: MDLMATextAreaComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionBez [
+	<magritteDescription>
+	^ MAStringDescription new
+	label: 'Bezeichnung';
+		accessor: #bez;
+		priority: 1;
+		required: true;
+		requiredErrorMessage: 'Bitte die Bezeichnung eingeben';
+		comment: 'Bitte Ihren Benutzernamen eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionContainer [
+	<magritteContainer>
+	^ super descriptionContainer
+		componentRenderer: MDLMAFormRenderer;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionHsnr [
+	<magritteDescription>
+	^ MAStringDescription new
+		label: 'Hausnummer';
+		accessor: #hsnr;
+		priority: 2;
+		required: true;
+		requiredErrorMessage: 'Bitte die Hausnummer eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionOrt [
+	<magritteDescription>
+	^ MAStringDescription new
+		label: 'Ort';
+		accessor: #ort;
+		priority: 4;
+		required: true;
+		requiredErrorMessage: 'Bitte die Ort eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionPlz [
+	<magritteDescription>
+	^ MAStringDescription new
+		label: 'Postleitzahl';
+		accessor: #plz;
+		priority: 3;
+		required: true;
+		requiredErrorMessage: 'Bitte die Postleitzahl eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionStr [
+	<magritteDescription>
+	^ MAStringDescription new
+		label: 'Strassen Namen';
+		accessor: #str;
+		priority: 1;
+		required: true;
+		requiredErrorMessage: 'Bitte die Strasse eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEAdresse >> descriptionTel [
+	<magritteDescription>
+	^ MAStringDescription new
+		label: 'Telefon Nummer';
+		accessor: #tel;
+		priority: 5;
+		required: true;
+		requiredErrorMessage: 'Bitte die Telefon Nummer eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
 { #category : #accessing }
 ASDEAdresse >> hsnr [
 	^ hsnr
@@ -43,6 +151,12 @@ ASDEAdresse >> hsnr [
 { #category : #accessing }
 ASDEAdresse >> hsnr: anObject [
 	hsnr := anObject
+]
+
+{ #category : #'initailize-release' }
+ASDEAdresse >> initialize [
+super initialize.
+	self id: ASDEAdresse count + 1
 ]
 
 { #category : #accessing }

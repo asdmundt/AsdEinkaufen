@@ -36,9 +36,7 @@ ASDELoginPage >> hasLoginError [
 
 { #category : #initialize }
 ASDELoginPage >> initialize [
-	super initialize.
-
-	
+	 super initialize
 ]
 
 { #category : #accessing }
@@ -61,13 +59,15 @@ ASDELoginPage >> rendeModalLoginButtonOn: html [
 	html
 		form: [ html
 				render:
-					(ASDLoginWidget new
+					(ASDLoginCardWidget new
 						callback:
 								[ :login :password | self rootComponent tryConnectionWithLogin: login andPassword: password ];
 						yourself) ].
-	html anchor
-		callback: [ self show: (WAInspector current on: self session) ];
-		with: 'Inspect Session'
+	self rootComponent 
+ class development
+		ifTrue: [ html anchor
+				callback: [ self show: (WAInspector current on: self session) ];
+				with: 'Inspect Session' ]
 ]
 
 { #category : #rendering }
@@ -79,13 +79,4 @@ ASDELoginPage >> renderContentOn: html [
 				middle;
 				size: 12;
 				with: [ self rendeModalLoginButtonOn: html ] ]
-]
-
-{ #category : #rendering }
-ASDELoginPage >> renderLoginErrorMessageIfAnyOn: html [
-	self hasLoginError ifTrue: [
-		showLoginError := false.
-		html tbsAlert
-			beDanger ;
-			with: self loginErrorMessage ]
 ]

@@ -8,7 +8,9 @@ Class {
 		'text',
 		'cssFile',
 		'name',
-		'userId'
+		'userId',
+		'ausliefernJIT',
+		'category'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }

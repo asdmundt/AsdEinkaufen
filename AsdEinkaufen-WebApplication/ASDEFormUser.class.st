@@ -1,6 +1,6 @@
 Class {
 	#name : #ASDEFormUser,
-	#superclass : #MDLHighLevelWidget,
+	#superclass : #ASDEForm,
 	#instVars : [
 		'cancelLabel',
 		'passwordLabel',
@@ -10,20 +10,12 @@ Class {
 		'cancelCallback',
 		'vornameLabel',
 		'titleLabel',
-		'model',
 		'isAjax',
 		'submitLabel',
 		'isDialog'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Components'
 }
-
-{ #category : #'instance creation' }
-ASDEFormUser class >> withModel: aModel [
-	^ self new
-		model: aModel;
-		yourself
-]
 
 { #category : #accessing }
 ASDEFormUser >> benutzerLabel [
@@ -123,16 +115,6 @@ ASDEFormUser >> isDialog: anObject [
 	isDialog := anObject
 ]
 
-{ #category : #accessing }
-ASDEFormUser >> model [
-	^ model
-]
-
-{ #category : #accessing }
-ASDEFormUser >> model: anObject [
-	model := anObject
-]
-
 { #category : #rendering }
 ASDEFormUser >> nachnameInputWidget [
 	^ MDLTextFieldWidget new
@@ -194,7 +176,7 @@ ASDEFormUser >> renderFieldsOn: html [
 	html render: self passwordInputWidget.
 	html render: self vornameInputWidget.
 	html render: self nachnameInputWidget.
-	html render: self gmailInputWidget
+	
 ]
 
 { #category : #rendering }
@@ -207,12 +189,18 @@ ASDEFormUser >> renderFormContentOn: html [
 
 { #category : #rendering }
 ASDEFormUser >> renderSubmitButtonOn: html [
-	html mdlButton
+self isAjax ifTrue: [ html mdlButton
 		raised;
 		accentColor;
 		beSubmit;
 		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok'
+		with: 'ok' ] ifFalse: [ html mdlButton
+		raised;
+		accentColor;
+		beSubmit;
+		class: 'mdl-button mdl-js-button mdl-button--raised';
+		with: 'ok' ]
+	
 ]
 
 { #category : #accessing }

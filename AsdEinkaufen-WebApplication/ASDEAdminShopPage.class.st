@@ -1,11 +1,21 @@
 Class {
-	#name : #ASDEShopAdminPage,
+	#name : #ASDEAdminShopPage,
 	#superclass : #ASDEPageAdmin,
 	#category : #'AsdEinkaufen-WebApplication-Pages'
 }
 
+{ #category : #accessing }
+ASDEAdminShopPage class >> pageName [
+	^ 'Shop Verwaltung'
+]
+
+{ #category : #accessing }
+ASDEAdminShopPage class >> priority [
+	^ 1
+]
+
 { #category : #rendering }
-ASDEShopAdminPage >> renderContentOn: html [
+ASDEAdminShopPage >> renderContentOn: html [
 	html mdlGrid
 		style: 'height: 700px;';
 		with: [ html mdlCell

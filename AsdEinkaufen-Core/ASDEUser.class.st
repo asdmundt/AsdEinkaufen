@@ -18,6 +18,13 @@ Class {
 }
 
 { #category : #'instance creation' }
+ASDEUser class >> asAdmin [
+	^ self new
+		admin: true;
+		yourself
+]
+
+{ #category : #'instance creation' }
 ASDEUser class >> benutzerName: login password: password [
 	^ self new
 		benutzerName: login;
@@ -95,18 +102,6 @@ ASDEUser >> descriptionContainer [
 ]
 
 { #category : #'magritte descriptions' }
-ASDEUser >> descriptionGmail [
-	<magritteDescription>
-	^ MAStringDescription new
-		priority: 10;
-		label: 'Gmail Adr.';
-		accessor: #gmail;
-		comment: 'bitte Ihre Email Adresse eingeben';
-		componentClass: MDLMATextInputComponent;
-		yourself
-]
-
-{ #category : #'magritte descriptions' }
 ASDEUser >> descriptionNachname [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -172,6 +167,18 @@ ASDEUser >> gmail: anObject [
 	gmail := anObject
 ]
 
+{ #category : #'magritte descriptions' }
+ASDEUser >> gmailDescription [
+	<magritteDescription>
+	^ MAStringDescription new
+		priority: 10;
+		label: 'Gmail Adr.';
+		accessor: #gmail;
+		comment: 'bitte Ihre Email Adresse eingeben';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
 { #category : #accessing }
 ASDEUser >> index [
 	^ index
@@ -198,6 +205,7 @@ ASDEUser >> initialize [
 	self logged: false.
 	self admin: false.
 	self indexLoggedUser: nil.
+	self id: ASDEUser count + 1
 ]
 
 { #category : #testing }
