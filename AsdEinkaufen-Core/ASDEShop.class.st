@@ -15,6 +15,14 @@ Class {
 	#category : #'AsdEinkaufen-Core-Model'
 }
 
+{ #category : #voyage }
+ASDEShop class >> isVoyageRoot [
+	"Indicates that instances of this class are top level documents
+    in noSQL databases"
+
+	^ true
+]
+
 { #category : #accessing }
 ASDEShop >> cssFile [
 	^ cssFile

@@ -41,12 +41,6 @@ ASDEPageAdmin >> children [
 	^ {}
 ]
 
-{ #category : #initialization }
-ASDEPageAdmin >> createDisplayComponent [
-self subclassResponsibility
-	
-]
-
 { #category : #accessing }
 ASDEPageAdmin >> displayComponent [
 	^ displayComponent

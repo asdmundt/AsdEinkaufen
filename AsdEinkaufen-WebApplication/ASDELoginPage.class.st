@@ -77,6 +77,12 @@ ASDELoginPage >> renderContentOn: html [
 		style: 'align-items: center; height: 100%';
 		with: [ html mdlCell
 				middle;
-				size: 12;
+				desktopOffset: 3;
+				tabletOffset: 3;
+				phoneOffset: 2;
+				desktopSize: 8;
+				tabletSize: 5;
+				phoneSize: 2;
+				
 				with: [ self rendeModalLoginButtonOn: html ] ]
 ]

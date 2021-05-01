@@ -1,13 +1,52 @@
 Class {
 	#name : #ASDEFormAdresse,
 	#superclass : #ASDEForm,
+	#instVars : [
+		'strLabel',
+		'hsnrLabel',
+		'plzLabel',
+		'ortLabel'
+	],
 	#category : #'AsdEinkaufen-WebApplication-Components'
 }
+
+{ #category : #accessing }
+ASDEFormAdresse >> hsnrLabel [
+	^ hsnrLabel
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> hsnrLabel: anObject [
+	hsnrLabel := anObject
+]
 
 { #category : #initalize }
 ASDEFormAdresse >> initialize [
 	super initialize.
-	
+	self strLabel: 'Strasse'.
+	self hsnrLabel: 'Haus Nr.'.
+	self plzLabel: 'Plz'.
+	self ortLabel: 'Ort'
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> ortLabel [
+	^ ortLabel
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> ortLabel: anObject [
+	ortLabel := anObject
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> plzLabel [
+	^ plzLabel
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> plzLabel: anObject [
+	plzLabel := anObject
 ]
 
 { #category : #rendering }
@@ -20,25 +59,74 @@ ASDEFormAdresse >> renderBezOn: html [
 			html mdlTextFieldInput
 				id: html lastId;
 				
-				value: model ]
+				value: self model bez;
+				callback: [ :aString | self model bez: aString ] ]
 ]
 
 { #category : #rendering }
 ASDEFormAdresse >> renderContentOn: html [
-	 self renderFormContentOn: html 
+		html
+		form: [ self renderFormContentOn: html.
+			self isAjax
+				ifTrue: [ self renderAjaxButtonOn: html ]
+				ifFalse: [ self renderButtonOn: html ] ]
 ]
 
 { #category : #rendering }
 ASDEFormAdresse >> renderFieldsOn: html [
-
+	self renderBezOn: html.
+	self renderStrOn: html.
+	self renderHsnrOn: html.
+	self renderPlzOn: html.
+	self renderButtonOn: html
 ]
 
 { #category : #rendering }
 ASDEFormAdresse >> renderFormContentOn: html [
 	self renderFieldsOn: html.
-	self isDialog ifFalse: [ self renderCancelButtonOn: html.
-	self renderSubmitButtonOn: html ]
-	
+
+]
+
+{ #category : #rendering }
+ASDEFormAdresse >> renderHsnrOn: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: html nextId;
+				with: 'Haus Nr.'.
+			html mdlTextFieldInput
+				id: html lastId;
+
+				value: self model hsnr;
+				callback: [ :aString | self model hsnr: aString ] ]
+]
+
+{ #category : #rendering }
+ASDEFormAdresse >> renderPlzOn: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: html nextId;
+				with: 'Postleitzahl'.
+			html mdlTextFieldInput
+				id: html lastId;
+
+				value: self model plz;
+				callback: [ :aString | self model plz: aString ] ]
+]
+
+{ #category : #rendering }
+ASDEFormAdresse >> renderStrOn: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: html nextId;
+				with: 'Strasse'.
+			html mdlTextFieldInput
+				id: html lastId;
+
+				value: self model str;
+				callback: [ :aString | self model str: aString ] ]
 ]
 
 { #category : #rendering }
@@ -55,4 +143,14 @@ self isAjax ifTrue: [ html mdlButton
 		class: 'mdl-button mdl-js-button mdl-button--raised';
 		with: 'ok' ]
 	
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> strLabel [
+	^ strLabel
+]
+
+{ #category : #accessing }
+ASDEFormAdresse >> strLabel: anObject [
+	strLabel := anObject
 ]

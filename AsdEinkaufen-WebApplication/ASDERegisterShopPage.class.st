@@ -5,7 +5,8 @@ Class {
 		'register',
 		'shop',
 		'adresse',
-		'htmlId'
+		'htmlId',
+		'adr'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Pages'
 }
@@ -24,11 +25,12 @@ ASDERegisterShopPage class >> priority [
 ASDERegisterShopPage >> addNewAccount [
 	| size obj |
 	size := ASDEUser selectAll size.
-	self register descriptions inspect.
 	obj := self register model.
-	obj save.
-	
-	obj save
+	self session model storeObject: obj.
+	self session currentUser: obj.
+	self session model addLoggedUser: obj.
+
+
 
 	"self goToLoginView"
 ]
@@ -37,12 +39,20 @@ ASDERegisterShopPage >> addNewAccount [
 ASDERegisterShopPage >> addNewAddres [
 	| obj |
 	
-	self adresse save.
 	obj := self adresse model.
-	obj save.
+	self session model storeObject: obj.
+	self goToLoginView
 	"obj id: 1."
-	obj save
-	"self goToLoginView"
+]
+
+{ #category : #accessing }
+ASDERegisterShopPage >> adr [
+	^ adr
+]
+
+{ #category : #accessing }
+ASDERegisterShopPage >> adr: anObject [
+	adr := anObject
 ]
 
 { #category : #accessing }
@@ -57,7 +67,7 @@ ASDERegisterShopPage >> adresse: anObject [
 
 { #category : #hooks }
 ASDERegisterShopPage >> children [
-	^ {self register }
+	^ {}
 ]
 
 { #category : #actions }
@@ -73,9 +83,8 @@ ASDERegisterShopPage >> htmlId [
 { #category : #initialize }
 ASDERegisterShopPage >> initialize [
 	super initialize.
-	self register: ASDEUser asAdmin asComponent yourself.
-	self adresse: ASDEAdresse new asComponent addValidation yourself.
-	self shop: ASDEShop new asComponent addValidation yourself
+	
+	
 ]
 
 { #category : #accessing }
@@ -90,82 +99,59 @@ ASDERegisterShopPage >> register: anObject [
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderAdresseOn: html [
-	html
-		form: [ html mdlCard
-				shadow: 2;
-				mdlTypographyTextLeft;
-				style: 'width: 70%; height: 100%;';
-				with: [ html mdlCardTitleContainer
-						with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
-					html mdlCardTextContainer: [ " " html render: self adresse ].
-					html mdlCardActions
-						border;
-						with: [ html div
-								class: 'mdl-typography--text-right';
-								with: [ html mdlButton
-										raised;
-										rippleEffect;
-										with: 'abbrechen'.
-									html space.
-									html mdlButton
-										raised;
-										primaryColor;
-										beSubmit;
-										callback: [ self addNewAccount ];
-										with: 'speichern'.
-									html mdlButton
-										raised;
-										primaryColor;
-										onClick:
-											(html jQuery ajax
-												callback: [ self addNewAddres ];
-												onComplete:
-													((html jQuery id: self htmlId) load
-														html: [ :ajaxHtml | self renderShopOn: ajaxHtml ]));
-										with: 'speichern' ] ] ] ]
+| addr|
+addr:= ASDEFormUser withModel: ASDEAdresse new.
+	html mdlCard
+		id: self htmlId;
+		shadow: 2;
+		mdlTypographyTextLeft;
+		style: 'width: 70%; height: 100%;';
+		with: [ html mdlCardTitleContainer
+				with: [ html mdlCardTitleText: 'Adresse anlegen' level: 2 ].
+			html
+				mdlCardTextContainer: [ " " ASDEFormUser withModel: ASDEAdresse new ] ]
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderContentOn: html [
 	html space.
-	 self renderRegisterOn: html
+	html mdlGrid
+		shadow: 0;
+		with: [ html mdlCell
+				class: 'grid-cell-demo';
+				desktopOffset: 3;
+				tabletOffset: 3;
+				phoneOffset: 2;
+				desktopSize: 8;
+				tabletSize: 5;
+				phoneSize: 2;
+				id: self htmlId;
+				with: [ self renderRegisterOn: html ] ]
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderRegisterOn: html [
-	html
-		form: [ html mdlCard
-				shadow: 2;
-				mdlTypographyTextLeft;
-				style: 'width: 70%; height: 100%;';
-				with: [ html mdlCardTitleContainer
-						with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
-					html mdlCardTextContainer: [ " " html render: self register ].
-					html mdlCardActions
-						border;
-						with: [ html div
-								class: 'mdl-typography--text-right';
-								with: [ html mdlButton
-										raised;
-										rippleEffect;
-										with: 'abbrechen'.
-									html space.
-									html mdlButton
-										raised;
-										primaryColor;
-										beSubmit;
-										callback: [ self addNewAccount ];
-										with: 'speichern'.
-									html mdlButton
-										raised;
-										primaryColor;
-										onClick:
-											(html jQuery ajax
-												callback: [ self addNewAccount ];
-												onComplete:
-													((html jQuery id: self htmlId) load
-														html: [ :ajaxHtml | self renderAdresseOn: ajaxHtml ]));
-										with: 'speichern' ] ] ] ]
+	| user |
+	user := ASDEFormUser withModel: ASDEUser asAdmin withAjax: true.
+	html mdlCard
+		id: html nextId;
+		shadow: 0;
+		mdlTypographyTextLeft;
+		style: 'width: 100%; height: 400px;';
+		with: [ html mdlCardTitleContainer
+				with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
+			html mdlCardTextContainer
+				id: html nextId;
+				with: [ " "
+					html
+						render:
+							(user
+								onClickBlock:
+									((html jQuery id: self htmlId) load
+										html: [ :ajaxHtml | 
+											self session model storeObject: user model.
+											self renderAdresseOn: ajaxHtml ];
+										onComplete: 'componentHandler.upgradeDom();' js)) ] ]
 ]
 
 { #category : #rendering }

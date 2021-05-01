@@ -22,6 +22,14 @@ ASDEAdresse class >> bez: aBez [
 		yourself
 ]
 
+{ #category : #voyage }
+ASDEAdresse class >> isVoyageRoot [
+	"Indicates that instances of this class are top level documents
+    in noSQL databases"
+
+	^ true
+]
+
 { #category : #accessing }
 ASDEAdresse >> bemerkung [
 	^ bemerkung

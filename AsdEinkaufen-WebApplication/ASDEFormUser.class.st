@@ -10,7 +10,6 @@ Class {
 		'cancelCallback',
 		'vornameLabel',
 		'titleLabel',
-		'isAjax',
 		'submitLabel',
 		'isDialog'
 	],
@@ -31,6 +30,7 @@ ASDEFormUser >> benutzerLabel: anObject [
 ASDEFormUser >> benutzerNaneInputWidget [
 	^ MDLTextFieldWidget new
 		beFloatingLabel;
+		
 		type: 'text';
 		label: benutzerLabel;
 		pattern: '^\S+$' errorMessage: 'kein leerstring';
@@ -64,6 +64,7 @@ ASDEFormUser >> gmailInputWidget [
 		beFloatingLabel;
 		type: 'text';
 		label: gmailLabel;
+		
 		pattern: '^\S+$' errorMessage: 'kein leerstring';
 		callback: [ :aString | self model gmail: aString ];
 		value: self model gmail
@@ -84,7 +85,7 @@ ASDEFormUser >> initialize [
 	super initialize.
 	self id: 'userFormCard'.
 	self titleLabel: 'Benutzer Verwaltung'.
-	self isAjax: false.
+	
 	self benutzerLabel: 'Benutzername'.
 	self cancelLabel: 'abbrechen'.
 	self gmailLabel: 'GMailName'.
@@ -92,17 +93,7 @@ ASDEFormUser >> initialize [
 	self passwordLabel: 'Password'.
 	self submitLabel: 'ok'.
 	self vornameLabel: 'Vorname'.
-	self isDialog: false.
-]
-
-{ #category : #accessing }
-ASDEFormUser >> isAjax [
-	^ isAjax
-]
-
-{ #category : #accessing }
-ASDEFormUser >> isAjax: anObject [
-	isAjax := anObject
+	self isDialog: false
 ]
 
 { #category : #accessing }
@@ -119,6 +110,7 @@ ASDEFormUser >> isDialog: anObject [
 ASDEFormUser >> nachnameInputWidget [
 	^ MDLTextFieldWidget new
 		beFloatingLabel;
+
 		type: 'text';
 		label: nachnameLabel;
 		pattern: '^\S+$' errorMessage: 'kein leerstring';
@@ -140,6 +132,7 @@ ASDEFormUser >> nachnameLabel: anObject [
 ASDEFormUser >> passwordInputWidget [
 	^ MDLTextFieldWidget new
 		beFloatingLabel;
+
 		type: 'password';
 		label: passwordLabel;
 		pattern: '^\S+$' errorMessage: 'kein leerstring';
@@ -167,7 +160,11 @@ ASDEFormUser >> renderCancelButtonOn: html [
 
 { #category : #rendering }
 ASDEFormUser >> renderContentOn: html [
-	 self renderFormContentOn: html 
+	html
+		form: [  self renderFieldsOn: html.
+			self isAjax
+				ifTrue: [ self renderAjaxButtonOn: html ]
+				ifFalse: [ self renderButtonOn: html ] ]
 ]
 
 { #category : #rendering }
@@ -182,9 +179,7 @@ ASDEFormUser >> renderFieldsOn: html [
 { #category : #rendering }
 ASDEFormUser >> renderFormContentOn: html [
 	self renderFieldsOn: html.
-	self isDialog ifFalse: [ self renderCancelButtonOn: html.
-	self renderSubmitButtonOn: html ]
-	
+
 ]
 
 { #category : #rendering }
@@ -227,6 +222,7 @@ ASDEFormUser >> titleLabel: anObject [
 ASDEFormUser >> vornameInputWidget [
 	^ MDLTextFieldWidget new
 		beFloatingLabel;
+
 		type: 'text';
 		label: vornameLabel;
 		pattern: '^\S+$' errorMessage: 'kein leerstring';

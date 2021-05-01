@@ -20,17 +20,37 @@ ASDEHeader >> possiblePages [
 ]
 
 { #category : #rendering }
+ASDEHeader >> renderAccountButtonOn: html [
+	html
+		mdlNavigation: [ html mdlButton icon
+				id: #bottomLeftButton;
+				with: [ html mdlIcon: #account_circle ].
+			html mdlMenu
+				bottomRight;
+				for: #bottomLeftButton;
+				with: [ html div 
+					style: 'width: 50px; height:50px;';
+					with: [ html text: 'test' ] ] ]
+]
+
+{ #category : #rendering }
+ASDEHeader >> renderButtonsOn: html [
+	self session isLogged
+		ifTrue: [ 
+			html
+		mdlNavigation: [
+			self renderAccountButtonOn: html ]]
+]
+
+{ #category : #rendering }
 ASDEHeader >> renderContentOn: html [
 	html
-		mdlLayoutHeader: [ 
-			html
-				mdlLayoutHeaderRow: [ 
-					html mdlNavigationLink
+		mdlLayoutHeader: [ html
+				mdlLayoutHeaderRow: [ html mdlNavigationLink
 						callback: [ "Just refresh" ];
-						with: [ html
-								mdlLayoutTitle: 'Einkaufen in Frankfurt' ].
+						with: [ html mdlLayoutTitle: 'Einkaufen in Frankfurt' ].
 					html mdlLayoutSpacer.
-					html text: 'Version 0.0.0'. ] ].
+					self renderButtonsOn: html  ] ].
 	self renderDrawerOn: html
 ]
 

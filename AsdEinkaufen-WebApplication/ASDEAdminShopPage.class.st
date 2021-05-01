@@ -16,11 +16,16 @@ ASDEAdminShopPage class >> priority [
 
 { #category : #rendering }
 ASDEAdminShopPage >> renderContentOn: html [
+	html space.
 	html mdlGrid
-		style: 'height: 700px;';
+		shadow: 0;
 		with: [ html mdlCell
-				stretch;
-				middle;
-				size: 12;
-				with: [  ] ]
+				class: 'grid-cell-demo';
+				desktopOffset: 3;
+				tabletOffset: 3;
+				phoneOffset: 2;
+				desktopSize: 8;
+				tabletSize: 5;
+				phoneSize: 2;
+				with: [ html text: 'khjkhkhjh' ] ]
 ]

@@ -93,6 +93,11 @@ ASDEPlanung >> loggedUsers: anObject [
 ]
 
 { #category : #operations }
+ASDEPlanung >> storeObject: aObject [
+	aObject save
+]
+
+{ #category : #operations }
 ASDEPlanung >> storeUser: aUser [
 	aUser save.
 ]

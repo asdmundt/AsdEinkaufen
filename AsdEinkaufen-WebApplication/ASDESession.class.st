@@ -20,7 +20,8 @@ Class {
 		'task',
 		'model',
 		'loginError',
-		'adminView'
+		'adminView',
+		'userId'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Utils'
 }
@@ -108,4 +109,14 @@ ASDESession >> task [
 { #category : #accessing }
 ASDESession >> task: anObject [
 	task := anObject
+]
+
+{ #category : #accessing }
+ASDESession >> userId [
+	^ userId
+]
+
+{ #category : #accessing }
+ASDESession >> userId: anObject [
+	userId := anObject
 ]

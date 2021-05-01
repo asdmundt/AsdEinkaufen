@@ -18,7 +18,9 @@ ASDELibrary >> projectCss [
         box-shadow: inset 0px -4px 0px 0px rgba(33,150,243,1) !important;
     }
 
-
+body{
+    background: #ccdee652;
+}
 
 .mdl-tabs__tab-bar {
  background: #eeeeee;

@@ -145,6 +145,16 @@ ASDERootComponent >> goToLoginView [
 	self displayInstanceOf: ASDELoginPage
 ]
 
+{ #category : #actions }
+ASDERootComponent >> goToOverviewView [
+	self displayInstanceOf: ASDEHomePage 
+]
+
+{ #category : #actions }
+ASDERootComponent >> goToShopAdminView [
+	self displayInstanceOf: ASDEAdminShopPage 
+]
+
 { #category : #accessing }
 ASDERootComponent >> header [
 	^ header
@@ -220,7 +230,7 @@ ASDERootComponent >> tryConnectionWithLogin: login andPassword: password [
 			"arg logged: true."
 			self session model addLoggedUser: arg.
 			arg isAdmin
-				ifTrue: [ arg password = 'pwd' ]
+				ifTrue: [self goToShopAdminView ]
 				ifFalse: [ self goToOverviewView ] ]
 		ifNil: [ self session loginError.
 			self goToLoginView ]
