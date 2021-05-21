@@ -23,6 +23,33 @@ ASDEShop class >> isVoyageRoot [
 	^ true
 ]
 
+{ #category : #'instance creation' }
+ASDEShop class >> userId: anInteger [
+	^ self new
+		userId: anInteger;
+		yourself
+]
+
+{ #category : #accessing }
+ASDEShop >> ausliefernJIT [
+	^ ausliefernJIT
+]
+
+{ #category : #accessing }
+ASDEShop >> ausliefernJIT: anObject [
+	ausliefernJIT := anObject
+]
+
+{ #category : #accessing }
+ASDEShop >> category [
+	^ category
+]
+
+{ #category : #accessing }
+ASDEShop >> category: anObject [
+	category := anObject
+]
+
 { #category : #accessing }
 ASDEShop >> cssFile [
 	^ cssFile
@@ -39,6 +66,12 @@ ASDEShop >> descriptionContainer [
 	^ super descriptionContainer
 		componentRenderer: MDLMAFormRenderer;
 		yourself
+]
+
+{ #category : #initialization }
+ASDEShop >> initialize [
+	super initialize.
+	
 ]
 
 { #category : #accessing }
@@ -62,13 +95,33 @@ ASDEShop >> name: anObject [
 ]
 
 { #category : #accessing }
+ASDEShop >> text [
+	^ text
+]
+
+{ #category : #accessing }
+ASDEShop >> text: anObject [
+	text := anObject
+]
+
+{ #category : #accessing }
 ASDEShop >> titel [
-	^ self maLazyFrom: self descriptionTitel
+	^ titel
 ]
 
 { #category : #accessing }
 ASDEShop >> titel: anObject [
 	titel := anObject
+]
+
+{ #category : #accessing }
+ASDEShop >> titleText [
+	^ titleText
+]
+
+{ #category : #accessing }
+ASDEShop >> titleText: anObject [
+	titleText := anObject
 ]
 
 { #category : #accessing }

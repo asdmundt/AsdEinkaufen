@@ -49,8 +49,7 @@ ASDESession >> currentUser: anObject [
 { #category : #initialization }
 ASDESession >> initialize [
 	super initialize.
-	self model: ASDEPlanung current.
-	
+	self model: ASDEDbModelPortal current.
 	self adminView: false
 ]
 

@@ -12,17 +12,12 @@ Class {
 		'index',
 		'indexLoggedUser',
 		'benutzerName',
-		'addresse'
+		'addresse',
+		'type',
+		'types'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }
-
-{ #category : #'instance creation' }
-ASDEUser class >> asAdmin [
-	^ self new
-		admin: true;
-		yourself
-]
 
 { #category : #'instance creation' }
 ASDEUser class >> benutzerName: login password: password [
@@ -67,6 +62,26 @@ ASDEUser >> admin [
 { #category : #accessing }
 ASDEUser >> admin: anObject [
 	admin := anObject
+]
+
+{ #category : #accessing }
+ASDEUser >> asAdmin [
+	self type: #admin
+]
+
+{ #category : #accessing }
+ASDEUser >> asCostumer [
+	self type: #costumer
+]
+
+{ #category : #accessing }
+ASDEUser >> asEmployee [
+	self type: #employee
+]
+
+{ #category : #accessing }
+ASDEUser >> asShopOwner [
+	self type: #shopOwner
 ]
 
 { #category : #accessing }
@@ -205,7 +220,10 @@ ASDEUser >> initialize [
 	self logged: false.
 	self admin: false.
 	self indexLoggedUser: nil.
-	self id: ASDEUser count + 1
+	
+	types := OrderedCollection
+		newFrom: {#admin . #costumer . #shopOwner . #employee}.
+	self type: #costumer
 ]
 
 { #category : #testing }
@@ -256,6 +274,21 @@ ASDEUser >> pwdGmail [
 { #category : #accessing }
 ASDEUser >> pwdGmail: anObject [
 	pwdGmail := anObject
+]
+
+{ #category : #accessing }
+ASDEUser >> type [
+	^ type
+]
+
+{ #category : #accessing }
+ASDEUser >> type: anObject [
+	type := anObject
+]
+
+{ #category : #accessing }
+ASDEUser >> types [
+	^ types
 ]
 
 { #category : #accessing }

@@ -22,6 +22,14 @@ ASDEAdresse class >> bez: aBez [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+ASDEAdresse class >> bez: aBez andUserId: anInteger [ 
+	^ self new
+		bez: aBez;
+		userId: anInteger;
+		yourself
+]
+
 { #category : #voyage }
 ASDEAdresse class >> isVoyageRoot [
 	"Indicates that instances of this class are top level documents
@@ -161,10 +169,10 @@ ASDEAdresse >> hsnr: anObject [
 	hsnr := anObject
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #initialization }
 ASDEAdresse >> initialize [
-super initialize.
-	self id: ASDEAdresse count + 1
+	super initialize.
+	
 ]
 
 { #category : #accessing }

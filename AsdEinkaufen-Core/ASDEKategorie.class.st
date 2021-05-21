@@ -3,17 +3,25 @@ Class {
 	#superclass : #ASDEEinkaufen,
 	#instVars : [
 		'name',
-		'title'
+		'type',
+		'types'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }
 
+{ #category : #voyage }
+ASDEKategorie class >> isVoyageRoot [
+	"Indicates that instances of this class are top level documents
+    in noSQL databases"
+
+	^ true
+]
+
 { #category : #'instance creation' }
-ASDEKategorie class >> name: aName andTitle: aTitle [
+ASDEKategorie class >> name: aName andType: aString [
 	^ self new
 		name: aName;
-		title: aTitle;
-		
+		type: aString;
 		yourself
 ]
 
@@ -28,11 +36,17 @@ ASDEKategorie >> name: anObject [
 ]
 
 { #category : #accessing }
-ASDEKategorie >> title [
-	^ title
+ASDEKategorie >> type [
+	^ type
 ]
 
 { #category : #accessing }
-ASDEKategorie >> title: anObject [
-	title := anObject
+ASDEKategorie >> type: anObject [
+	type := anObject
+]
+
+{ #category : #accessing }
+ASDEKategorie >> types [
+	^ OrderedCollection
+		newFrom: {'shop' . 'artikelArtKategorie' . 'artikelOberKategorie' . 'artikelKategorie'}.
 ]

@@ -1,32 +1,38 @@
 Class {
-	#name : #ASDEResellerPage,
+	#name : #ASDEShopOwnerPageOverview,
 	#superclass : #ASDEPage,
 	#category : #'AsdEinkaufen-WebApplication-Pages'
 }
 
 { #category : #accessing }
-ASDEResellerPage class >> pageName [
+ASDEShopOwnerPageOverview class >> pageName [
 	^ 'Hello world'
 ]
 
 { #category : #accessing }
-ASDEResellerPage class >> priority [
+ASDEShopOwnerPageOverview class >> priority [
 	^ 1
 ]
 
 { #category : #rendering }
-ASDEResellerPage >> renderContentOn: html [
+ASDEShopOwnerPageOverview >> renderContentOn: html [
+	html space.
 	html mdlGrid
-		style: 'align-items: center; height: 200px; width:100%; ';
+		shadow: 0;
 		with: [ html mdlCell
-				stretch;
-				size: 12;
-				with: [ html div
-						with: [self renderRegisterOn: html] ] ]
+				class: 'grid-cell-demo';
+				desktopOffset: 3;
+				tabletOffset: 3;
+				phoneOffset: 2;
+				desktopSize: 8;
+				tabletSize: 5;
+				phoneSize: 2;
+				id: self htmlId;
+				with: [ self renderTaskOn: html ] ]
 ]
 
 { #category : #rendering }
-ASDEResellerPage >> renderRegisterOn: html [
+ASDEShopOwnerPageOverview >> renderTaskOn: html [
 	html mdlCard
 		shadow: 2;
 		mdlTypographyTextLeft;

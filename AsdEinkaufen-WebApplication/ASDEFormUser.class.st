@@ -16,6 +16,15 @@ Class {
 	#category : #'AsdEinkaufen-WebApplication-Components'
 }
 
+{ #category : #rendering }
+ASDEFormUser >> _renderContentOn: html [
+	html
+		form: [ self renderFieldsOn: html.
+			self isAjax
+				ifTrue: [ self renderAjaxButtonOn: html ]
+				ifFalse: [ self renderButtonOn: html ] ]
+]
+
 { #category : #accessing }
 ASDEFormUser >> benutzerLabel [
 	^ benutzerLabel
@@ -160,11 +169,15 @@ ASDEFormUser >> renderCancelButtonOn: html [
 
 { #category : #rendering }
 ASDEFormUser >> renderContentOn: html [
-	html
-		form: [  self renderFieldsOn: html.
-			self isAjax
-				ifTrue: [ self renderAjaxButtonOn: html ]
-				ifFalse: [ self renderButtonOn: html ] ]
+	html mdlCard
+		shadow: 0;
+		mdlTypographyTextLeft;
+		style: 'width: 100%; height: 500px;';
+		with: [ html mdlCardTitleContainer
+				with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
+			html mdlCardTextContainer
+				id: html nextId;
+				with: [ super renderContentOn: html ] ]
 ]
 
 { #category : #rendering }

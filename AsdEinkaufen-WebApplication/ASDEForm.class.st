@@ -139,7 +139,8 @@ ASDEForm >> renderAjaxButtonOn: html [
 			html mdlButton
 				raised;
 				primaryColor;
-				onClick: self onClickBlock;
+				"beSubmit;"
+					onClick: self onClickBlock;
 				with: 'speichern' ]
 ]
 
@@ -160,7 +161,23 @@ ASDEForm >> renderButtonOn: html [
 				with: 'ok' ]
 ]
 
+{ #category : #rendering }
+ASDEForm >> renderContentOn: html [
+html form: [
+	self renderFieldsOn: html.
+	self isAjax
+		ifTrue: [ self renderAjaxButtonOn: html ]
+		ifFalse: [ self renderButtonOn: html ]]
+]
+
+{ #category : #rendering }
+ASDEForm >> renderFieldsOn: html [
+self subclassResponsibility
+	
+]
+
 { #category : #actions }
 ASDEForm >> validateAndSave [
+	
 	self session model storeObject: self model
 ]

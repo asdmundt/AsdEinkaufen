@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 ASDEPageAdmin class >> isAbstract [
-	^ self = ASDBPageLogin
+	^ self = ASDEPageAdmin
 ]
 
 { #category : #accessing }
@@ -60,26 +60,4 @@ ASDEPageAdmin >> initialize [
 { #category : #accessing }
 ASDEPageAdmin >> pathName [
 	^ self class pathName
-]
-
-{ #category : #rendering }
-ASDEPageAdmin >> renderAddButtonsOn: html [
-	html break.
-	html mdlGrid
-		shadow: 0;
-		style: 'height: 50px;';
-		with: [ html mdlCell
-				class: 'grid-cell-demo';
-				top;
-				size: 1.
-			html mdlCell
-				class: 'grid-cell-demo';
-				top;
-				size: 10;
-				with: [ self renderSelfNewButtonOn: html.
-					].
-			html mdlCell
-				class: 'grid-cell-demo';
-				top;
-				size: 1 ]
 ]

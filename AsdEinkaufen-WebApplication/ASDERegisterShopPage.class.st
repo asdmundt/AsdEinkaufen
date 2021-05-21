@@ -2,11 +2,11 @@ Class {
 	#name : #ASDERegisterShopPage,
 	#superclass : #ASDEPage,
 	#instVars : [
-		'register',
-		'shop',
-		'adresse',
 		'htmlId',
-		'adr'
+		'formComponent',
+		'user',
+		'adresse',
+		'shop'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Pages'
 }
@@ -46,16 +46,6 @@ ASDERegisterShopPage >> addNewAddres [
 ]
 
 { #category : #accessing }
-ASDERegisterShopPage >> adr [
-	^ adr
-]
-
-{ #category : #accessing }
-ASDERegisterShopPage >> adr: anObject [
-	adr := anObject
-]
-
-{ #category : #accessing }
 ASDERegisterShopPage >> adresse [
 	^ adresse
 ]
@@ -68,6 +58,16 @@ ASDERegisterShopPage >> adresse: anObject [
 { #category : #hooks }
 ASDERegisterShopPage >> children [
 	^ {}
+]
+
+{ #category : #accessing }
+ASDERegisterShopPage >> formComponent [
+	^ formComponent
+]
+
+{ #category : #accessing }
+ASDERegisterShopPage >> formComponent: anObject [
+	formComponent := anObject
 ]
 
 { #category : #actions }
@@ -83,33 +83,43 @@ ASDERegisterShopPage >> htmlId [
 { #category : #initialize }
 ASDERegisterShopPage >> initialize [
 	super initialize.
-	
-	
-]
-
-{ #category : #accessing }
-ASDERegisterShopPage >> register [
-	^ register
-]
-
-{ #category : #accessing }
-ASDERegisterShopPage >> register: anObject [
-	register := anObject
+	self user: ASDEUser new.
+	self user asShopOwner.
+	self
+		adresse: (ASDEAdresse bez: 'Shop Adresse' andUserId: self user id).
+	self shop: (ASDEShop userId: self user id).
+	self
+		formComponent: (ASDEFormUser withModel: self user withAjax: true)
+	"
+	self
+		adresse:
+			(ASDEFormAdresse withModel: self adresse withAjax: true).
+	self
+		shop: (ASDEFormShop withModel: self shop)"
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderAdresseOn: html [
-| addr|
-addr:= ASDEFormUser withModel: ASDEAdresse new.
 	html mdlCard
-		id: self htmlId;
-		shadow: 2;
+		id: html nextId;
+		shadow: 0;
 		mdlTypographyTextLeft;
-		style: 'width: 70%; height: 100%;';
+		style: 'width: 100%; height: 500px;';
 		with: [ html mdlCardTitleContainer
 				with: [ html mdlCardTitleText: 'Adresse anlegen' level: 2 ].
-			html
-				mdlCardTextContainer: [ " " ASDEFormUser withModel: ASDEAdresse new ] ]
+			html mdlCardTextContainer
+				id: html nextId;
+				with: [ " "
+					html
+						render:
+							(self adresse
+								onClickBlock:
+									(html jQuery ajax
+										callback: [ self adresse validateAndSave ];
+										onComplete:
+											((html jQuery id: self htmlId) load
+												html: [ :ajaxHtml | self renderShopOn: ajaxHtml ];
+												onComplete: 'componentHandler.upgradeDom();' js))) ] ]
 ]
 
 { #category : #rendering }
@@ -126,15 +136,39 @@ ASDERegisterShopPage >> renderContentOn: html [
 				tabletSize: 5;
 				phoneSize: 2;
 				id: self htmlId;
-				with: [ self renderRegisterOn: html ] ]
+				with: [ html
+						render:
+							(self formComponent
+								onClickBlock:
+									(html jQuery ajax
+										callback: [ self formComponent validateAndSave.
+											self
+												formComponent: (ASDEFormAdresse withModel: self adresse withAjax: true) ];
+										onComplete:
+											((html jQuery id: self htmlId) load
+												html: [ :ajaxHtml | 
+													ajaxHtml
+														render:
+															(self formComponent
+																onClickBlock:
+																	(html jQuery ajax
+																		callback: [ self formComponent validateAndSave.
+																				"(ASDEFormShop withModel: self shop)" ];
+																		onComplete:
+																			((html jQuery id: self htmlId) load
+																				html: [ :rHtml | 
+																					self formComponent: DateAndTime now.
+																					rHtml render: self formComponent ]))) ]))) ] ]
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderRegisterOn: html [
-	| user |
-	user := ASDEFormUser withModel: ASDEUser asAdmin withAjax: true.
+	| user reg |
+	user := ASDEUser new.
+	user asShopOwner.
+	reg := ASDEFormUser withModel: user withAjax: true.
 	html mdlCard
-		id: html nextId;
+		id: self htmlId;
 		shadow: 0;
 		mdlTypographyTextLeft;
 		style: 'width: 100%; height: 400px;';
@@ -145,41 +179,25 @@ ASDERegisterShopPage >> renderRegisterOn: html [
 				with: [ " "
 					html
 						render:
-							(user
+							(reg
 								onClickBlock:
 									((html jQuery id: self htmlId) load
 										html: [ :ajaxHtml | 
-											self session model storeObject: user model.
-											self renderAdresseOn: ajaxHtml ];
-										onComplete: 'componentHandler.upgradeDom();' js)) ] ]
+											reg validateAndSave.
+											self renderAdresseOn: html ])) ] ]
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderShopOn: html [
 	html space.
-	html
-		form: [ html mdlCard
-				shadow: 2;
-				mdlTypographyTextLeft;
-				style: 'width: 70%; height: 100%;';
-				with: [ html mdlCardTitleContainer
-						with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
-					html mdlCardTextContainer: [ " " html render: self shop ].
-					html mdlCardActions
-						border;
-						with: [ html div
-								class: 'mdl-typography--text-right';
-								with: [ html mdlButton
-										raised;
-										rippleEffect;
-										with: 'abbrechen'.
-									html space.
-									html mdlButton
-										raised;
-										primaryColor;
-										beSubmit;
-										callback: [ self addNewAccount ];
-										with: 'speichern' ] ] ] ]
+	html mdlCard
+		shadow: 2;
+		mdlTypographyTextLeft;
+		id: self htmlId;
+		style: 'width: 70%; height: 100%;';
+		with: [ html mdlCardTitleContainer
+				with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
+			html mdlCardTextContainer: [ " " html render: self shop ] ]
 ]
 
 { #category : #accessing }
@@ -190,4 +208,14 @@ ASDERegisterShopPage >> shop [
 { #category : #accessing }
 ASDERegisterShopPage >> shop: anObject [
 	shop := anObject
+]
+
+{ #category : #accessing }
+ASDERegisterShopPage >> user [
+	^ user
+]
+
+{ #category : #accessing }
+ASDERegisterShopPage >> user: anObject [
+	user := anObject
 ]

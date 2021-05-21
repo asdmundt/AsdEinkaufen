@@ -24,10 +24,22 @@ body{
 
 .mdl-tabs__tab-bar {
  background: #eeeeee;
-}'
+}
+
+.mdl-textfield {
+    position: relative;
+    font-size: 18px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 2;
+    padding: 20px 0;
+}
+'
 ]
 
 { #category : #accessing }
 ASDELibrary >> selectorsToInclude [
-	^ #(#projectCss #materialbluegreyblueminCss)
+	^ #(#materialbluegreyblueminCss #projectCss)
 ]

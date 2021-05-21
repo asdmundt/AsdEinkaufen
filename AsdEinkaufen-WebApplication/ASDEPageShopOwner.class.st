@@ -1,5 +1,5 @@
 Class {
-	#name : #ASDEPageLogin,
+	#name : #ASDEPageShopOwner,
 	#superclass : #ASDEComponent,
 	#instVars : [
 		'displayComponent'
@@ -8,56 +8,56 @@ Class {
 }
 
 { #category : #testing }
-ASDEPageLogin class >> isAbstract [
-	^ self = ASDBPageLogin
+ASDEPageShopOwner class >> isAbstract [
+	^ self = ASDEPageAdmin
 ]
 
 { #category : #accessing }
-ASDEPageLogin class >> pageName [
+ASDEPageShopOwner class >> pageName [
 	"Title of the page that will be used in menus and URLs."
 
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-ASDEPageLogin class >> pagesToDisplay [
+ASDEPageShopOwner class >> pagesToDisplay [
 	^ (self allSubclasses reject: #isAbstract) sorted: #priority ascending
 ]
 
 { #category : #accessing }
-ASDEPageLogin class >> pathName [
+ASDEPageShopOwner class >> pathName [
 	"Use to define the URL name"
 
 	^ self pageName copyWithout: $  
 ]
 
 { #category : #accessing }
-ASDEPageLogin class >> priority [
+ASDEPageShopOwner class >> priority [
 	^ self subclassResponsibility
 ]
 
 { #category : #hooks }
-ASDEPageLogin >> children [
+ASDEPageShopOwner >> children [
 	^ {}
 ]
 
 { #category : #accessing }
-ASDEPageLogin >> displayComponent [
+ASDEPageShopOwner >> displayComponent [
 	^ displayComponent
 ]
 
 { #category : #accessing }
-ASDEPageLogin >> displayComponent: anObject [
+ASDEPageShopOwner >> displayComponent: anObject [
 	displayComponent := anObject
 ]
 
 { #category : #initialization }
-ASDEPageLogin >> initialize [
+ASDEPageShopOwner >> initialize [
 	super initialize.
 	
 ]
 
 { #category : #accessing }
-ASDEPageLogin >> pathName [
+ASDEPageShopOwner >> pathName [
 	^ self class pathName
 ]

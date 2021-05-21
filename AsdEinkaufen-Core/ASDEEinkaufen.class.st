@@ -37,9 +37,10 @@ ASDEEinkaufen >> id: anObject [
 ASDEEinkaufen >> initialize [
 	super initialize.
 	self task: OrderedCollection new.
+	self id: UUID new.
 	states := OrderedCollection
-		newFrom: {'new' . 'editing' . 'ready' . 'delivering' . 'done' . 'notReady'}.
-	self status: 'new'.	
+		newFrom: {'new' . 'accepted' . 'inProgress' . 'done' . 'problem'}.
+	self status: 'new'
 ]
 
 { #category : #accessing }

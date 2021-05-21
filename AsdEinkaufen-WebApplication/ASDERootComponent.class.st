@@ -226,11 +226,11 @@ ASDERootComponent >> tryConnectionWithLogin: login andPassword: password [
 	user
 		ifNotNil: [ :arg | 
 			self session currentUser: arg.
-
+			self session userId: arg id.
 			"arg logged: true."
 			self session model addLoggedUser: arg.
 			arg isAdmin
-				ifTrue: [self goToShopAdminView ]
+				ifTrue: [ self goToShopAdminView ]
 				ifFalse: [ self goToOverviewView ] ]
 		ifNil: [ self session loginError.
 			self goToLoginView ]

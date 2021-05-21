@@ -65,11 +65,16 @@ ASDEFormAdresse >> renderBezOn: html [
 
 { #category : #rendering }
 ASDEFormAdresse >> renderContentOn: html [
-		html
-		form: [ self renderFormContentOn: html.
-			self isAjax
-				ifTrue: [ self renderAjaxButtonOn: html ]
-				ifFalse: [ self renderButtonOn: html ] ]
+	html mdlCard
+		
+		shadow: 0;
+		mdlTypographyTextLeft;
+		style: 'width: 100%; height: 500px;';
+		with: [ html mdlCardTitleContainer
+				with: [ html mdlCardTitleText: 'Adresse anlegen' level: 2 ].
+			html mdlCardTextContainer
+				id: html nextId;
+				with: [ super renderContentOn: html ] ]
 ]
 
 { #category : #rendering }
@@ -78,7 +83,8 @@ ASDEFormAdresse >> renderFieldsOn: html [
 	self renderStrOn: html.
 	self renderHsnrOn: html.
 	self renderPlzOn: html.
-	self renderButtonOn: html
+	self renderOrtOn: html.
+	
 ]
 
 { #category : #rendering }
@@ -99,6 +105,19 @@ ASDEFormAdresse >> renderHsnrOn: html [
 
 				value: self model hsnr;
 				callback: [ :aString | self model hsnr: aString ] ]
+]
+
+{ #category : #rendering }
+ASDEFormAdresse >> renderOrtOn: html [
+	html mdlTextFieldContainer
+		floatingLabel;
+		with: [ html mdlTextFieldLabel
+				for: html nextId;
+				with: self ortLabel.
+			html mdlTextFieldInput
+				id: html lastId;
+				value: self model ort;
+				callback: [ :aString | self model ort: aString ] ]
 ]
 
 { #category : #rendering }
