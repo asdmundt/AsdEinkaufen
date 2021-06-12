@@ -23,6 +23,7 @@ ASDEFormAdresse >> hsnrLabel: anObject [
 { #category : #initalize }
 ASDEFormAdresse >> initialize [
 	super initialize.
+	self id: 'adressFormCard'.
 	self strLabel: 'Strasse'.
 	self hsnrLabel: 'Haus Nr.'.
 	self plzLabel: 'Plz'.
@@ -146,22 +147,6 @@ ASDEFormAdresse >> renderStrOn: html [
 
 				value: self model str;
 				callback: [ :aString | self model str: aString ] ]
-]
-
-{ #category : #rendering }
-ASDEFormAdresse >> renderSubmitButtonOn: html [
-self isAjax ifTrue: [ html mdlButton
-		raised;
-		accentColor;
-		beSubmit;
-		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok' ] ifFalse: [ html mdlButton
-		raised;
-		accentColor;
-		beSubmit;
-		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok' ]
-	
 ]
 
 { #category : #accessing }

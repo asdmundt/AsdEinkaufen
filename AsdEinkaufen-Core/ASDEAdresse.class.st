@@ -87,14 +87,6 @@ ASDEAdresse >> descriptionBez [
 ]
 
 { #category : #'magritte-accessing' }
-ASDEAdresse >> descriptionContainer [
-	<magritteContainer>
-	^ super descriptionContainer
-		componentRenderer: MDLMAFormRenderer;
-		yourself
-]
-
-{ #category : #'magritte-accessing' }
 ASDEAdresse >> descriptionHsnr [
 	<magritteDescription>
 	^ MAStringDescription new

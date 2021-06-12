@@ -87,7 +87,7 @@ ASDEDbModelPortal class >> version [
 { #category : #operations }
 ASDEDbModelPortal >> addLoggedUser: aUser [
 	aUser logged: true.
-	aUser save.
+	Repos save: aUser 
 ]
 
 { #category : #operations }

@@ -104,7 +104,7 @@ ASDEDbModelPortalErp >> loggedUsers: anObject [
 
 { #category : #operations }
 ASDEDbModelPortalErp >> storeObject: aObject [
-	aObject save: Repos
+	Repos save: aObject
 ]
 
 { #category : #accessing }

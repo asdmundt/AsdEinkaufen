@@ -155,6 +155,11 @@ ASDERootComponent >> goToShopAdminView [
 	self displayInstanceOf: ASDEAdminShopPage 
 ]
 
+{ #category : #actions }
+ASDERootComponent >> goToShopOwnerView [
+	self displayInstanceOf: ASDEShopOwnerPageOverview
+]
+
 { #category : #accessing }
 ASDERootComponent >> header [
 	^ header

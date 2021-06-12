@@ -195,22 +195,6 @@ ASDEFormUser >> renderFormContentOn: html [
 
 ]
 
-{ #category : #rendering }
-ASDEFormUser >> renderSubmitButtonOn: html [
-self isAjax ifTrue: [ html mdlButton
-		raised;
-		accentColor;
-		beSubmit;
-		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok' ] ifFalse: [ html mdlButton
-		raised;
-		accentColor;
-		beSubmit;
-		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok' ]
-	
-]
-
 { #category : #accessing }
 ASDEFormUser >> submitLabel [
 	^ submitLabel

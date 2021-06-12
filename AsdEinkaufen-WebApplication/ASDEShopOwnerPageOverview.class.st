@@ -1,6 +1,6 @@
 Class {
 	#name : #ASDEShopOwnerPageOverview,
-	#superclass : #ASDEPage,
+	#superclass : #ASDEPageShopOwner,
 	#category : #'AsdEinkaufen-WebApplication-Pages'
 }
 

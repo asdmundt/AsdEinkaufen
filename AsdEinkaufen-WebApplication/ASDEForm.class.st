@@ -3,7 +3,6 @@ Class {
 	#superclass : #MDLHighLevelWidget,
 	#instVars : [
 		'model',
-		'htmlId',
 		'display',
 		'dom',
 		'isAjax',
@@ -81,16 +80,6 @@ ASDEForm >> dom: anObject [
 	dom := anObject
 ]
 
-{ #category : #accessing }
-ASDEForm >> htmlId [
-	^ htmlId
-]
-
-{ #category : #accessing }
-ASDEForm >> htmlId: anObject [
-	htmlId := anObject
-]
-
 { #category : #initalize }
 ASDEForm >> initialize [
 	super initialize.
@@ -139,8 +128,9 @@ ASDEForm >> renderAjaxButtonOn: html [
 			html mdlButton
 				raised;
 				primaryColor;
-				"beSubmit;"
-					onClick: self onClickBlock;
+				beSubmit;
+					bePush;
+				onClick: self onClickBlock;
 				with: 'speichern' ]
 ]
 

@@ -35,16 +35,6 @@ ASDERegisterShopPage >> addNewAccount [
 	"self goToLoginView"
 ]
 
-{ #category : #actions }
-ASDERegisterShopPage >> addNewAddres [
-	| obj |
-	
-	obj := self adresse model.
-	self session model storeObject: obj.
-	self goToLoginView
-	"obj id: 1."
-]
-
 { #category : #accessing }
 ASDERegisterShopPage >> adresse [
 	^ adresse
@@ -88,8 +78,8 @@ ASDERegisterShopPage >> initialize [
 	self
 		adresse: (ASDEAdresse bez: 'Shop Adresse' andUserId: self user id).
 	self shop: (ASDEShop userId: self user id).
-	self
-		formComponent: (ASDEFormUser withModel: self user withAjax: true)
+	"self
+		formComponent: (ASDEFormUser withModel: self user withAjax: true)"
 	"
 	self
 		adresse:
@@ -100,26 +90,18 @@ ASDERegisterShopPage >> initialize [
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderAdresseOn: html [
-	html mdlCard
-		id: html nextId;
-		shadow: 0;
-		mdlTypographyTextLeft;
-		style: 'width: 100%; height: 500px;';
-		with: [ html mdlCardTitleContainer
-				with: [ html mdlCardTitleText: 'Adresse anlegen' level: 2 ].
-			html mdlCardTextContainer
-				id: html nextId;
-				with: [ " "
-					html
-						render:
-							(self adresse
-								onClickBlock:
-									(html jQuery ajax
-										callback: [ self adresse validateAndSave ];
-										onComplete:
-											((html jQuery id: self htmlId) load
-												html: [ :ajaxHtml | self renderShopOn: ajaxHtml ];
-												onComplete: 'componentHandler.upgradeDom();' js))) ] ]
+	" "|adrForm|
+adrForm := (ASDEFormAdresse withModel: self adresse withAjax: true) .
+	html
+		render:
+			(adrForm
+				onClickBlock:
+					(html jQuery ajax
+						callback: [ adrForm validateAndSave.
+							];
+						onComplete:
+							((html jQuery id: self htmlId) load
+								html: [ :ajaxHtml | self renderShopOn: ajaxHtml ])))
 ]
 
 { #category : #rendering }
@@ -135,69 +117,44 @@ ASDERegisterShopPage >> renderContentOn: html [
 				desktopSize: 8;
 				tabletSize: 5;
 				phoneSize: 2;
-				id: self htmlId;
-				with: [ html
-						render:
-							(self formComponent
-								onClickBlock:
-									(html jQuery ajax
-										callback: [ self formComponent validateAndSave.
-											self
-												formComponent: (ASDEFormAdresse withModel: self adresse withAjax: true) ];
-										onComplete:
-											((html jQuery id: self htmlId) load
-												html: [ :ajaxHtml | 
-													ajaxHtml
-														render:
-															(self formComponent
-																onClickBlock:
-																	(html jQuery ajax
-																		callback: [ self formComponent validateAndSave.
-																				"(ASDEFormShop withModel: self shop)" ];
-																		onComplete:
-																			((html jQuery id: self htmlId) load
-																				html: [ :rHtml | 
-																					self formComponent: DateAndTime now.
-																					rHtml render: self formComponent ]))) ]))) ] ]
+				
+				with: [ html div
+						id: self htmlId;
+						with: [ self renderRegisterOn: html ] ] ]
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderRegisterOn: html [
-	| user reg |
-	user := ASDEUser new.
-	user asShopOwner.
-	reg := ASDEFormUser withModel: user withAjax: true.
-	html mdlCard
-		id: self htmlId;
-		shadow: 0;
-		mdlTypographyTextLeft;
-		style: 'width: 100%; height: 400px;';
-		with: [ html mdlCardTitleContainer
-				with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
-			html mdlCardTextContainer
-				id: html nextId;
-				with: [ " "
-					html
-						render:
-							(reg
-								onClickBlock:
-									((html jQuery id: self htmlId) load
-										html: [ :ajaxHtml | 
-											reg validateAndSave.
-											self renderAdresseOn: html ])) ] ]
+	| userForm |
+	userForm := ASDEFormUser withModel: self user withAjax: true.
+	html
+		render:
+			(userForm
+				onClickBlock:
+					(html jQuery ajax
+					serializeForm;
+						callback: [ "serializeForm;"
+							userForm validateAndSave.
+							self session currentUser: userForm model.
+							self session userId: userForm model id.
+							"arg logged: true."
+							userForm model inspect.
+							self session model addLoggedUser: userForm model ];
+						onComplete:
+							((html jQuery id: self htmlId) load
+								html: [ :ajaxHtml | self renderAdresseOn: ajaxHtml ];
+								onComplete: 'componentHandler.upgradeElements(this);' js)))
 ]
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderShopOn: html [
-	html space.
-	html mdlCard
-		shadow: 2;
-		mdlTypographyTextLeft;
-		id: self htmlId;
-		style: 'width: 70%; height: 100%;';
-		with: [ html mdlCardTitleContainer
-				with: [ html mdlCardTitleText: 'Konto anlegen' level: 2 ].
-			html mdlCardTextContainer: [ " " html render: self shop ] ]
+	| shopForm |
+	shopForm := ASDEFormShop withModel: self shop.
+	html
+		render:
+			(shopForm
+				callback: [ :model | shopForm validateAndSave ];
+				yourself)
 ]
 
 { #category : #accessing }

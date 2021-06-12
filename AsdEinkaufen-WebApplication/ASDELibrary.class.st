@@ -36,6 +36,12 @@ body{
     margin: 2;
     padding: 20px 0;
 }
+
+.mdl-layout__header {
+  
+    background-color: #2a415f; important!
+  
+}
 '
 ]
 

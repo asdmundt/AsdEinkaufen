@@ -46,6 +46,7 @@ ASDEFormShop >> cssFileLabel: anObject [
 { #category : #initalize }
 ASDEFormShop >> initialize [
 	super initialize.
+	self id: 'shopFormCard'.
 	self titelLabel: 'Tiel'.
 	self titleTextLabel: 'Titel Text'.
 	self textLabel: 'Text'.
@@ -145,22 +146,6 @@ ASDEFormShop >> renderNameOn: html [
 				id: html lastId;
 				value: self model name;
 				callback: [ :aString | self model name: aString ] ]
-]
-
-{ #category : #rendering }
-ASDEFormShop >> renderSubmitButtonOn: html [
-self isAjax ifTrue: [ html mdlButton
-		raised;
-		accentColor;
-		beSubmit;
-		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok' ] ifFalse: [ html mdlButton
-		raised;
-		accentColor;
-		beSubmit;
-		class: 'mdl-button mdl-js-button mdl-button--raised';
-		with: 'ok' ]
-	
 ]
 
 { #category : #rendering }
