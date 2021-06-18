@@ -27,7 +27,7 @@ ASDEShopOwnerPageOverview >> renderContentOn: html [
 				desktopSize: 8;
 				tabletSize: 5;
 				phoneSize: 2;
-				id: self htmlId;
+				
 				with: [ self renderTaskOn: html ] ]
 ]
 

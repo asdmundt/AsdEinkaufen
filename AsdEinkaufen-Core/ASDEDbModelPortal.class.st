@@ -17,31 +17,51 @@ ASDEDbModelPortal class >> createAdmin [
 
 { #category : #'data sample' }
 ASDEDbModelPortal class >> createDemoData [
-	(ASDEUser benutzerName: 'admin' password: 'xyz' admin: false) save.
-	ASDEKategorie name: 'Elektronik' andType: 'shop' save.
-	ASDEKategorie name: 'Baumarkt' andType: 'shop' save.
-	ASDEKategorie name: 'Textilien' andType: 'shop' save.
-	ASDEKategorie name: 'SecondHand' andType: 'shop' save.
-	ASDEKategorie name: 'Moebel' andType: 'shop' save.
-	ASDEKategorie name: 'Werkzeug' andType: 'shop' save.
-	ASDEKategorie name: 'Multimedia' andType: 'artikelArtKategorie' save.
-	ASDEKategorie name: 'Computer' andType: 'artikelArtKategorie' save.
-	ASDEKategorie
+	"(ASDEUser benutzerName: 'shop' password: 'xyz' admin: false)
+		asShopOwner save."
+
+	Repos save: (ASDEKategorie name: 'Elektronik' andType: 'shop').
+	Repos save: (ASDEKategorie name: 'Baumarkt' andType: 'shop' ).
+	Repos save: (ASDEKategorie name: 'Textilien' andType: 'shop' ).
+	Repos save: (ASDEKategorie name: 'SecondHand' andType: 'shop' ).
+	Repos save: (ASDEKategorie name: 'Moebel' andType: 'shop' ).
+	Repos save: (ASDEKategorie name: 'Werkzeug' andType: 'shop' ).
+	Repos
+		save: (ASDEKategorie
+		name: 'Multimedia'
+		andType: 'artikelArtKategorie' ).
+	Repos
+		save: (ASDEKategorie
+		name: 'Computer'
+		andType: 'artikelArtKategorie' ).
+	Repos
+		save: (ASDEKategorie
 		name: 'ComputerKomponenten'
-		andType: 'artikelArtKategorie' save.
-	ASDEKategorie name: 'Lampen' andType: 'artikelArtKategorie' save.
-	ASDEKategorie name: 'Moebel' andType: 'artikelArtKategorie' save.
-	ASDEKategorie
-		name: 'ElektronikKomponenten'
-		andType: 'artikelArtKategorie' save.
-	ASDEKategorie name: 'Boxen' andType: 'artikelOberKategorie' save.
-	ASDEKategorie name: 'Reciever' andType: 'artikelOberKategorie' save.
-	ASDEKategorie name: 'Mp3Player' andType: 'artikelOberKategorie' save.
-	ASDEKategorie name: 'TV' andType: 'artikelOberKategorie' save.
-	ASDEKategorie name: 'Satelit' andType: 'artikelOberKategorie' save.
-	ASDEKategorie
-		name: 'ElektronikKomponenten'
-		andType: 'artikelOberKategorie' save
+		andType: 'artikelArtKategorie' ).
+	Repos
+		save: (ASDEKategorie name: 'Lampen' andType: 'artikelArtKategorie').
+	Repos
+		save: (ASDEKategorie name: 'Moebel' andType: 'artikelArtKategorie').
+	Repos
+		save:
+			(ASDEKategorie
+				name: 'ElektronikKomponenten'
+				andType: 'artikelArtKategorie').
+	Repos
+		save: (ASDEKategorie name: 'Boxen' andType: 'artikelOberKategorie').
+	Repos
+		save: (ASDEKategorie name: 'Reciever' andType: 'artikelOberKategorie').
+	Repos
+		save: (ASDEKategorie name: 'Mp3Player' andType: 'artikelOberKategorie').
+	Repos
+		save: (ASDEKategorie name: 'TV' andType: 'artikelOberKategorie').
+	Repos
+		save: (ASDEKategorie name: 'Satelit' andType: 'artikelOberKategorie').
+	Repos
+		save:
+			(ASDEKategorie
+				name: 'ElektronikKomponenten'
+				andType: 'artikelOberKategorie')
 ]
 
 { #category : #'class initialization' }
@@ -101,6 +121,15 @@ ASDEDbModelPortal >> artikelCategories [
 		selectMany: [ :each | each type = 'artikelKategorie' ]
 ]
 
+{ #category : #operations }
+ASDEDbModelPortal >> categorieCollection [
+	| categorieColl |
+	categorieColl := OrderedCollection new.
+	self  shopCategories
+		do: [ :aCat | categorieColl add: aCat name ].
+	^ categorieColl
+]
+
 { #category : #initialization }
 ASDEDbModelPortal >> initialize [
 	super initialize.
@@ -125,8 +154,7 @@ ASDEDbModelPortal >> oberCategories [
 
 { #category : #operations }
 ASDEDbModelPortal >> shopCategories [
-	^ ASDEKategorie
-		selectMany: [ :each | each type = 'shop' ]
+	^ Repos  selectMany: ASDEKategorie where: [ :each | each type = 'shop' ]
 ]
 
 { #category : #operations }

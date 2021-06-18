@@ -65,6 +65,11 @@ ASDERegisterShopPage >> goToLoginView [
 	self displayInstanceOf: ASDELoginPage 
 ]
 
+{ #category : #actions }
+ASDERegisterShopPage >> goToShopView [
+	self displayInstanceOf: ASDEShopOwnerPageOverview
+]
+
 { #category : #accessing }
 ASDERegisterShopPage >> htmlId [
 	^ #registerComponente
@@ -90,18 +95,39 @@ ASDERegisterShopPage >> initialize [
 
 { #category : #rendering }
 ASDERegisterShopPage >> renderAdresseOn: html [
-	" "|adrForm|
-adrForm := (ASDEFormAdresse withModel: self adresse withAjax: true) .
+	" "
+
+	| adrForm |
+	adrForm := ASDEFormAdresse withModel: self adresse withAjax: true.
 	html
 		render:
 			(adrForm
 				onClickBlock:
 					(html jQuery ajax
-						callback: [ adrForm validateAndSave.
-							];
+					serializeForm;
+						callback: [ adrForm validateAndSave ];
 						onComplete:
 							((html jQuery id: self htmlId) load
 								html: [ :ajaxHtml | self renderShopOn: ajaxHtml ])))
+]
+
+{ #category : #rendering }
+ASDERegisterShopPage >> renderCategoryOn: html [
+	| selectedEntity |
+	html
+		render:
+			((MDLSelectWidget
+				possibilities: self session model categorieCollection
+				inputLabel: self categoryLabel
+				labelBlock: #asString
+				callback: [ :input | 
+					selectedEntity := input.
+					self model category: input ]
+				selectedObject: selectedEntity
+				tooltip: self categoryLabel
+				sortBlock: [ :a :b | a <= b ])
+				entryTooltip: [ :number | self categoryLabel , ': ' , number asString ];
+				yourself)
 ]
 
 { #category : #rendering }
@@ -149,12 +175,17 @@ ASDERegisterShopPage >> renderRegisterOn: html [
 { #category : #rendering }
 ASDERegisterShopPage >> renderShopOn: html [
 	| shopForm |
-	shopForm := ASDEFormShop withModel: self shop.
-	html
+	shopForm := ASDEFormShop withModel: self shop withAjax: true.
+		html
 		render:
 			(shopForm
-				callback: [ :model | shopForm validateAndSave ];
-				yourself)
+				onClickBlock:
+					(html jQuery ajax
+						serializeForm;
+						callback: [ shopForm validateAndSave ];
+						onComplete:
+							((html jQuery id: self htmlId) load
+								html: [ :ajaxHtml | self renderShopOn: ajaxHtml ])))
 ]
 
 { #category : #accessing }

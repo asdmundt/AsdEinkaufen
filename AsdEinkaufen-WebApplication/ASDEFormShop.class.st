@@ -8,7 +8,9 @@ Class {
 		'cssFileLabel',
 		'nameLabel',
 		'ausliefernJITLabel',
-		'categoryLabel'
+		'categoryLabel',
+		'categorieCollection',
+		'selectedComponentView'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Components'
 }
@@ -21,6 +23,20 @@ ASDEFormShop >> ausliefernJITLabel [
 { #category : #accessing }
 ASDEFormShop >> ausliefernJITLabel: anObject [
 	ausliefernJITLabel := anObject
+]
+
+{ #category : #accessing }
+ASDEFormShop >> categorieCollection [
+	| categorieColl |
+	categorieColl:=OrderedCollection new.
+	self session model shopCategories
+		do: [ :aCat | categorieColl add: aCat name ].
+	^ categorieColl
+]
+
+{ #category : #accessing }
+ASDEFormShop >> categorieCollection: anObject [
+	categorieCollection := anObject
 ]
 
 { #category : #accessing }
@@ -53,7 +69,8 @@ ASDEFormShop >> initialize [
 	self cssFileLabel: 'Css'.
 	self nameLabel: 'Shop Name'.
 	self ausliefernJITLabel: 'Sofort Lieferung'.
-	self categoryLabel: 'Shop Kategorie'
+	self categoryLabel: 'Shop Kategorie'.
+	
 ]
 
 { #category : #accessing }
@@ -81,15 +98,18 @@ ASDEFormShop >> renderAusliefernJITOn: html [
 
 { #category : #rendering }
 ASDEFormShop >> renderCategoryOn: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: html nextId;
-				with: self categoryLabel.
-			html mdlTextFieldInput
-				id: html lastId;
-				value: self model category;
-				callback: [ :aString | self model category: aString ] ]
+	| selectedEntity |
+	html
+		render:
+			((MDLSelectWidget
+				possibilities: self categorieCollection asArray 
+				inputLabel: self categoryLabel
+				labelBlock: #asString
+				callback: [ :input | 
+					selectedEntity := input.
+					self model category: input ]
+			
+				yourself))
 ]
 
 { #category : #rendering }
@@ -121,12 +141,12 @@ ASDEFormShop >> renderCssFileOn: html [
 { #category : #rendering }
 ASDEFormShop >> renderFieldsOn: html [
 	self renderTitelOn: html.
-	self renderTitleTextOn: html.
-	self renderTextOn: html.
-	self renderCssFileOn: html.
+	"self renderTitleTextOn: html."
+	"self renderTextOn: html."
+	"self renderCssFileOn: html."
 	self renderNameOn: html.
 	self renderAusliefernJITOn: html.
-	self renderCategoryOn: html
+	"self renderCategoryOn: html"
 ]
 
 { #category : #rendering }
@@ -185,6 +205,16 @@ ASDEFormShop >> renderTitleTextOn: html [
 				id: html lastId;
 				value: self model titleText;
 				callback: [ :aString | self model titleText: aString ] ]
+]
+
+{ #category : #accessing }
+ASDEFormShop >> selectedComponentView [
+	^ selectedComponentView
+]
+
+{ #category : #accessing }
+ASDEFormShop >> selectedComponentView: aBoolean [ 
+	selectedComponentView := aBoolean
 ]
 
 { #category : #accessing }
