@@ -5,7 +5,8 @@ Class {
 		'status',
 		'task',
 		'states',
-		'id'
+		'id',
+		'dataModel'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }
@@ -21,6 +22,16 @@ ASDEEinkaufen class >> isVoyageRoot [
 { #category : #actions }
 ASDEEinkaufen >> addTask: aTask [
 self task add: aTask.
+]
+
+{ #category : #accessing }
+ASDEEinkaufen >> dataModel [
+	^ dataModel
+]
+
+{ #category : #accessing }
+ASDEEinkaufen >> dataModel: anObject [
+	dataModel := anObject
 ]
 
 { #category : #accessing }

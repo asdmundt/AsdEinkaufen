@@ -67,7 +67,7 @@ ASDERegisterShopPage >> goToLoginView [
 
 { #category : #actions }
 ASDERegisterShopPage >> goToShopView [
-	self displayInstanceOf: ASDEShopOwnerPageOverview
+	self displayInstanceOf: ASDEShopOwnerPageSettings
 ]
 
 { #category : #accessing }
@@ -82,15 +82,7 @@ ASDERegisterShopPage >> initialize [
 	self user asShopOwner.
 	self
 		adresse: (ASDEAdresse bez: 'Shop Adresse' andUserId: self user id).
-	self shop: (ASDEShop userId: self user id).
-	"self
-		formComponent: (ASDEFormUser withModel: self user withAjax: true)"
-	"
-	self
-		adresse:
-			(ASDEFormAdresse withModel: self adresse withAjax: true).
-	self
-		shop: (ASDEFormShop withModel: self shop)"
+	
 ]
 
 { #category : #rendering }
@@ -98,36 +90,14 @@ ASDERegisterShopPage >> renderAdresseOn: html [
 	" "
 
 	| adrForm |
-	adrForm := ASDEFormAdresse withModel: self adresse withAjax: true.
+	adrForm := ASDEFormAdresse withModel: self adresse.
 	html
 		render:
 			(adrForm
-				onClickBlock:
-					(html jQuery ajax
-					serializeForm;
-						callback: [ adrForm validateAndSave ];
-						onComplete:
-							((html jQuery id: self htmlId) load
-								html: [ :ajaxHtml | self renderShopOn: ajaxHtml ])))
-]
-
-{ #category : #rendering }
-ASDERegisterShopPage >> renderCategoryOn: html [
-	| selectedEntity |
-	html
-		render:
-			((MDLSelectWidget
-				possibilities: self session model categorieCollection
-				inputLabel: self categoryLabel
-				labelBlock: #asString
-				callback: [ :input | 
-					selectedEntity := input.
-					self model category: input ]
-				selectedObject: selectedEntity
-				tooltip: self categoryLabel
-				sortBlock: [ :a :b | a <= b ])
-				entryTooltip: [ :number | self categoryLabel , ': ' , number asString ];
-				yourself)
+				
+						callback: [ : model | self session model storeObject: model.
+							self goToShopView ]
+						)
 ]
 
 { #category : #rendering }
@@ -158,34 +128,19 @@ ASDERegisterShopPage >> renderRegisterOn: html [
 			(userForm
 				onClickBlock:
 					(html jQuery ajax
-					serializeForm;
+						serializeForm;
 						callback: [ "serializeForm;"
 							userForm validateAndSave.
 							self session currentUser: userForm model.
 							self session userId: userForm model id.
 							"arg logged: true."
-							userForm model inspect.
-							self session model addLoggedUser: userForm model ];
+							userForm model .
+							self session model addLoggedUser: userForm model.
+							self session inspect  ];
 						onComplete:
 							((html jQuery id: self htmlId) load
 								html: [ :ajaxHtml | self renderAdresseOn: ajaxHtml ];
 								onComplete: 'componentHandler.upgradeElements(this);' js)))
-]
-
-{ #category : #rendering }
-ASDERegisterShopPage >> renderShopOn: html [
-	| shopForm |
-	shopForm := ASDEFormShop withModel: self shop withAjax: true.
-		html
-		render:
-			(shopForm
-				onClickBlock:
-					(html jQuery ajax
-						serializeForm;
-						callback: [ shopForm validateAndSave ];
-						onComplete:
-							((html jQuery id: self htmlId) load
-								html: [ :ajaxHtml | self renderShopOn: ajaxHtml ])))
 ]
 
 { #category : #accessing }

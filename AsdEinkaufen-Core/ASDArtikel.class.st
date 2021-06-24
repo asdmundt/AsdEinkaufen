@@ -15,7 +15,8 @@ Class {
 		'oberKategorie',
 		'kategorie',
 		'shopId',
-		'bild'
+		'bild',
+		'tags'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }
@@ -33,6 +34,12 @@ ASDArtikel class >> shopId: anInt [
 	^ self new
 		shopId: anInt;
 		yourself
+]
+
+{ #category : #actions }
+ASDArtikel >> addTag: aTag [
+tags add: aTag 
+	
 ]
 
 { #category : #accessing }
@@ -105,6 +112,12 @@ ASDArtikel >> hersteller: anObject [
 	hersteller := anObject
 ]
 
+{ #category : #initialization }
+ASDArtikel >> initialize [
+	super initialize.
+	self tags: OrderedCollection new.
+]
+
 { #category : #accessing }
 ASDArtikel >> kategorie [
 	^ kategorie
@@ -153,6 +166,16 @@ ASDArtikel >> shopId [
 { #category : #accessing }
 ASDArtikel >> shopId: anObject [
 	shopId := anObject
+]
+
+{ #category : #accessing }
+ASDArtikel >> tags [
+	^ tags
+]
+
+{ #category : #accessing }
+ASDArtikel >> tags: anObject [
+	tags := anObject
 ]
 
 { #category : #accessing }

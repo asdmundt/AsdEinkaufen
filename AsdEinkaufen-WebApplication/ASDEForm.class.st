@@ -141,13 +141,15 @@ ASDEForm >> renderButtonOn: html [
 		with: [ html mdlButton
 				raised;
 				rippleEffect;
+				beSubmit;
+				callback: [ self answer: nil ];
 				with: 'abbrechen'.
 			html space.
 			html mdlButton
 				raised;
 				primaryColor;
 				beSubmit;
-				callback: [ callback value: model ];
+				callback: [ self answer: model ];
 				with: 'ok' ]
 ]
 

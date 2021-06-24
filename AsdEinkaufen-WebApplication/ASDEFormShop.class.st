@@ -101,15 +101,14 @@ ASDEFormShop >> renderCategoryOn: html [
 	| selectedEntity |
 	html
 		render:
-			((MDLSelectWidget
-				possibilities: self categorieCollection asArray 
+			(MDLSelectWidget
+				possibilities: self categorieCollection asArray
 				inputLabel: self categoryLabel
 				labelBlock: #asString
-				callback: [ :input | 
+				callback:
+					[ :input | 
 					selectedEntity := input.
-					self model category: input ]
-			
-				yourself))
+					self model category: input ] yourself)	"self categorieCollection asArray"
 ]
 
 { #category : #rendering }
@@ -141,12 +140,12 @@ ASDEFormShop >> renderCssFileOn: html [
 { #category : #rendering }
 ASDEFormShop >> renderFieldsOn: html [
 	self renderTitelOn: html.
-	"self renderTitleTextOn: html."
-	"self renderTextOn: html."
+	self renderTitleTextOn: html.
+	self renderTextOn: html.
 	"self renderCssFileOn: html."
 	self renderNameOn: html.
 	self renderAusliefernJITOn: html.
-	"self renderCategoryOn: html"
+	self renderCategoryOn: html
 ]
 
 { #category : #rendering }
@@ -170,15 +169,17 @@ ASDEFormShop >> renderNameOn: html [
 
 { #category : #rendering }
 ASDEFormShop >> renderTextOn: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: html nextId;
-				with: self textLabel.
-			html mdlTextFieldInput
-				id: html lastId;
-				value: self model text;
-				callback: [ :aString | self model text: aString ] ]
+	html
+		render:
+			(ASDMATinymceWidget new
+		beFloatingLabel;
+		type: 'text';
+		label: self textLabel;
+		pattern: '^\S+$' errorMessage: 'kein leerstring';
+		callback: [ :aString | self model text: aString ];
+		value: self model text)	"self categorieCollection asArray"
+
+
 ]
 
 { #category : #rendering }
@@ -196,15 +197,18 @@ ASDEFormShop >> renderTitelOn: html [
 
 { #category : #rendering }
 ASDEFormShop >> renderTitleTextOn: html [
-	html mdlTextFieldContainer
-		floatingLabel;
-		with: [ html mdlTextFieldLabel
-				for: html nextId;
-				with: self titleTextLabel.
-			html mdlTextFieldInput
-				id: html lastId;
-				value: self model titleText;
-				callback: [ :aString | self model titleText: aString ] ]
+
+	html
+		render:
+			(ASDMATinymceWidget new
+				beFloatingLabel;
+				type: 'text';
+				label: self titleTextLabel;
+				pattern: '^\S+$' errorMessage: 'kein leerstring';
+				callback: [ :aString | self model titleText: aString ];
+				value: self model titleText)	"self categorieCollection asArray"
+
+
 ]
 
 { #category : #accessing }

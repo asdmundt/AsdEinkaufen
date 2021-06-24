@@ -50,8 +50,9 @@ ASDERootComponent class >> initialize [
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: JQUiDevelopmentLibrary;
 		addLibrary: TMCEFileLibrary;
-		addLibrary: MDLLibrary;
 		addLibrary: ASDELibrary;
+		addLibrary: MDLLibrary;
+		
 		yourself
 ]
 
@@ -212,15 +213,26 @@ ASDERootComponent >> renderContentOn: html [
 						style: 'height: 90%; ';
 						with: [ html mdlCell
 								stretch;
-							"	desktopOffset: 1;
+								"	desktopOffset: 1;
 								tabletOffset: 2;"
-								"phoneOffset: 1;"
+									"phoneOffset: 1;"
 									desktopSize: 12;
 								"tabletSize: 6;"
-								"phoneSize: 1;"
+									"phoneSize: 1;"
 									with: [ html render: self componentToDisplay ] ].
+								self session isLogged 
+								ifTrue: [ self renderRightPanel: html ]
+					.
 					html render: self footer ] ].
 	self renderEmptyGenericDialogOn: html
+]
+
+{ #category : #rendering }
+ASDERootComponent >> renderRightPanel: html [
+	html div
+		shadow: 0;
+		style: 'height: 700px; display: flex;';
+		with: ASDEComponentWithRightPanel new
 ]
 
 { #category : #actions }

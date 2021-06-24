@@ -2,7 +2,8 @@ Class {
 	#name : #ASDEPageShopOwner,
 	#superclass : #ASDEComponent,
 	#instVars : [
-		'displayComponent'
+		'displayComponent',
+		'shop'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Core'
 }
@@ -54,10 +55,21 @@ ASDEPageShopOwner >> displayComponent: anObject [
 { #category : #initialization }
 ASDEPageShopOwner >> initialize [
 	super initialize.
-	
+	self
+		shop: (ASDEShop dataModel: self session model userId: self session userId)
 ]
 
 { #category : #accessing }
 ASDEPageShopOwner >> pathName [
 	^ self class pathName
+]
+
+{ #category : #accessing }
+ASDEPageShopOwner >> shop [
+	^ shop
+]
+
+{ #category : #accessing }
+ASDEPageShopOwner >> shop: anObject [
+	shop := anObject
 ]

@@ -21,7 +21,8 @@ Class {
 		'model',
 		'loginError',
 		'adminView',
-		'userId'
+		'userId',
+		'modelErp'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Utils'
 }
@@ -50,6 +51,7 @@ ASDESession >> currentUser: anObject [
 ASDESession >> initialize [
 	super initialize.
 	self model: ASDEDbModelPortal current.
+	self modelErp: ASDEDbModelPortalErp current.
 	self adminView: false
 ]
 
@@ -76,6 +78,16 @@ ASDESession >> model [
 { #category : #accessing }
 ASDESession >> model: anObject [
 	model := anObject
+]
+
+{ #category : #accessing }
+ASDESession >> modelErp [
+	^ modelErp
+]
+
+{ #category : #accessing }
+ASDESession >> modelErp: anObject [
+	modelErp := anObject
 ]
 
 { #category : #actions }

@@ -10,10 +10,19 @@ Class {
 		'name',
 		'userId',
 		'ausliefernJIT',
-		'category'
+		'category',
+		'fileId'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }
+
+{ #category : #'instance creation' }
+ASDEShop class >> dataModel: anObject userId: anInteger [
+	^ self new
+	dataModel: anObject;
+		userId: anInteger;
+		yourself
+]
 
 { #category : #voyage }
 ASDEShop class >> isVoyageRoot [
@@ -21,13 +30,6 @@ ASDEShop class >> isVoyageRoot [
     in noSQL databases"
 
 	^ true
-]
-
-{ #category : #'instance creation' }
-ASDEShop class >> userId: anInteger [
-	^ self new
-		userId: anInteger;
-		yourself
 ]
 
 { #category : #accessing }
@@ -68,10 +70,20 @@ ASDEShop >> descriptionContainer [
 		yourself
 ]
 
+{ #category : #accessing }
+ASDEShop >> fileId [
+	^ fileId
+]
+
+{ #category : #accessing }
+ASDEShop >> fileId: anObject [
+	fileId := anObject
+]
+
 { #category : #initialization }
 ASDEShop >> initialize [
 	super initialize.
-	
+	fileId := self dataModel shopCount
 ]
 
 { #category : #accessing }

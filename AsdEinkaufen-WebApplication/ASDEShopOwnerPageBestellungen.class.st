@@ -1,27 +1,27 @@
 Class {
-	#name : #ASDEShopOwnerPageOverview,
+	#name : #ASDEShopOwnerPageBestellungen,
 	#superclass : #ASDEPageShopOwner,
 	#category : #'AsdEinkaufen-WebApplication-Pages'
 }
 
 { #category : #accessing }
-ASDEShopOwnerPageOverview class >> pageName [
-	^ 'Shop Übersicht'
+ASDEShopOwnerPageBestellungen class >> pageName [
+	^ 'Shop Bestellungen'
 ]
 
 { #category : #accessing }
-ASDEShopOwnerPageOverview class >> priority [
-	^ 1
+ASDEShopOwnerPageBestellungen class >> priority [
+	^ 4
 ]
 
 { #category : #initalize }
-ASDEShopOwnerPageOverview >> initialize [
+ASDEShopOwnerPageBestellungen >> initialize [
 	super initialize.
 	
 ]
 
 { #category : #rendering }
-ASDEShopOwnerPageOverview >> renderCategorytestOn: html [
+ASDEShopOwnerPageBestellungen >> renderCategorytestOn: html [
 	| selected |
 
 	html div
@@ -50,7 +50,7 @@ ASDEShopOwnerPageOverview >> renderCategorytestOn: html [
 ]
 
 { #category : #rendering }
-ASDEShopOwnerPageOverview >> renderContentOn: html [
+ASDEShopOwnerPageBestellungen >> renderContentOn: html [
 	html space.
 	html mdlGrid
 		shadow: 0;
@@ -66,7 +66,7 @@ ASDEShopOwnerPageOverview >> renderContentOn: html [
 ]
 
 { #category : #rendering }
-ASDEShopOwnerPageOverview >> renderTaskOn: html [
+ASDEShopOwnerPageBestellungen >> renderTaskOn: html [
 	html mdlCard
 		shadow: 2;
 		mdlTypographyTextLeft;

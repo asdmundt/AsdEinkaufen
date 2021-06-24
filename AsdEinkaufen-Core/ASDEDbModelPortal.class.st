@@ -138,7 +138,7 @@ ASDEDbModelPortal >> initialize [
 
 { #category : #accessing }
 ASDEDbModelPortal >> loggedUsers [
-	^ ASDEUser selectMany: [ :each | each logged = true ]
+	^Repos selectMany: ASDEUser where: [ :each | each logged = true ]
 ]
 
 { #category : #accessing }
@@ -155,6 +155,11 @@ ASDEDbModelPortal >> oberCategories [
 { #category : #operations }
 ASDEDbModelPortal >> shopCategories [
 	^ Repos  selectMany: ASDEKategorie where: [ :each | each type = 'shop' ]
+]
+
+{ #category : #accessing }
+ASDEDbModelPortal >> shopCount [
+	^ Repos count: ASDEShop
 ]
 
 { #category : #operations }
