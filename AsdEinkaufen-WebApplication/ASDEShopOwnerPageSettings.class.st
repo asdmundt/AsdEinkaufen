@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 ASDEShopOwnerPageSettings class >> pageName [
-	^ 'Shop einstellungen'
+	^ 'Shopeinstellungen'
 ]
 
 { #category : #accessing }
