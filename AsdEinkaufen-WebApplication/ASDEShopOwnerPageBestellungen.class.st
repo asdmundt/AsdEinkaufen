@@ -17,7 +17,7 @@ ASDEShopOwnerPageBestellungen class >> priority [
 { #category : #initalize }
 ASDEShopOwnerPageBestellungen >> initialize [
 	super initialize.
-	
+	self session rootComponent header: ASDEHeaderShopOwner new
 ]
 
 { #category : #rendering }

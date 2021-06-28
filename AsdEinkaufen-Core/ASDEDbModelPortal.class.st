@@ -159,7 +159,7 @@ ASDEDbModelPortal >> shopCategories [
 
 { #category : #accessing }
 ASDEDbModelPortal >> shopCount [
-	^ Repos count: ASDEShop
+	^ Repos  count: ASDEShop 
 ]
 
 { #category : #operations }

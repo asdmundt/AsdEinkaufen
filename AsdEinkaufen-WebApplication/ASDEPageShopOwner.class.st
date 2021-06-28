@@ -56,7 +56,7 @@ ASDEPageShopOwner >> displayComponent: anObject [
 ASDEPageShopOwner >> initialize [
 	super initialize.
 	self
-		shop: (ASDEShop dataModel: self session model userId: self session userId)
+		shop: (ASDEShop dataModel: (self session model )userId: (self session userId))
 ]
 
 { #category : #accessing }

@@ -83,7 +83,7 @@ ASDEShop >> fileId: anObject [
 { #category : #initialization }
 ASDEShop >> initialize [
 	super initialize.
-	fileId := self dataModel shopCount
+	
 ]
 
 { #category : #accessing }

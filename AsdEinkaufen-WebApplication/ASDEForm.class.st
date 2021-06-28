@@ -149,7 +149,7 @@ ASDEForm >> renderButtonOn: html [
 				raised;
 				primaryColor;
 				beSubmit;
-				callback: [ self answer: model ];
+				callback: [ callback value: model ];
 				with: 'ok' ]
 ]
 
