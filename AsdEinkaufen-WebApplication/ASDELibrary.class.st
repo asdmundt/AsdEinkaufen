@@ -19,7 +19,8 @@ ASDELibrary >> projectCss [
     }
 
 body{
-    background: #ccdee652;
+   /* background: #ccdee652;*/
+ 	background: #ffffff;
 }
 
 .mdl-tabs__tab-bar {
@@ -41,6 +42,16 @@ body{
   
     background-color: #2a415f; important!
   
+}
+
+.right-panel {
+    width: 400px;
+    height: 100%;
+    -webkit-transition: all .75s;
+    transition: all .75s;
+    background-color: #FFF;
+    overflow: auto;
+    position: relative;
 }
 '
 ]

@@ -8,7 +8,7 @@ Class {
 ASDERightPanelMsg >> renderContentOn: html [
 	html div
 		id: #msgPanel;
-		with: [ self renderTabsOn: html ]
+		with: [html render: 'This is the first panel' "self renderTabsOn: html" ]
 ]
 
 { #category : #rendering }

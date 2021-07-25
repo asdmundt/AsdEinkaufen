@@ -204,25 +204,26 @@ ASDERootComponent >> initialize [
 
 { #category : #rendering }
 ASDERootComponent >> renderContentOn: html [
+	| size |
+	self session isLogged
+		ifTrue: [ size := 8 ]
+		ifFalse: [ size := 12 ].
 	html
 		mdlLayout: [ html render: self header.
 			html mdlLayoutContent
 				class: 'mdl-color-text--grey-600';
 				with: [ html mdlGrid
 						noSpacing;
-						style: 'height: 90%; ';
+						style: 'height: 100%; ';
 						with: [ html mdlCell
 								stretch;
-								"	desktopOffset: 1;
-								tabletOffset: 2;"
-									"phoneOffset: 1;"
-									desktopSize: 12;
-								"tabletSize: 6;"
-									"phoneSize: 1;"
-									with: [ html render: self componentToDisplay ] ].
-								self session isLogged 
-								ifTrue: [ self renderRightPanel: html ]
-					.
+								size: size;
+								with: [ html render: self componentToDisplay ].
+								self session isLogged
+										ifTrue: [html mdlCell
+								stretch;
+								size: 4;
+								with: [ html render: self componentToDisplay ]. ]].
 					html render: self footer ] ].
 	self renderEmptyGenericDialogOn: html
 ]
@@ -230,8 +231,8 @@ ASDERootComponent >> renderContentOn: html [
 { #category : #rendering }
 ASDERootComponent >> renderRightPanel: html [
 	html div
-		shadow: 0;
-		style: 'height: 700px; display: flex;';
+		shadow: 2;
+		style: 'height: 700px; display: flex; with: 300px; padding:15px';
 		with: ASDEComponentWithRightPanel new
 ]
 
@@ -242,6 +243,7 @@ ASDERootComponent >> tryConnectionWithLogin: login andPassword: password [
 	"self halt."
 	user
 		ifNotNil: [ :arg | 
+			arg logged: true.
 			self session currentUser: arg.
 			self session userId: arg id.
 			"arg logged: true."

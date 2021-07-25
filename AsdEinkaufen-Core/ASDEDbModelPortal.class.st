@@ -12,32 +12,29 @@ Class {
 
 { #category : #voyage }
 ASDEDbModelPortal class >> createAdmin [
-	(ASDEUser benutzerName: 'admin' password: 'pwd' admin: true) save
+	Repos save: (ASDEUser benutzerName: 'admin' password: 'pwd' admin: true) 
 ]
 
 { #category : #'data sample' }
 ASDEDbModelPortal class >> createDemoData [
 	"(ASDEUser benutzerName: 'shop' password: 'xyz' admin: false)
 		asShopOwner save."
-
+Repos save: (ASDEKategorie name: 'Portal' andType: 'shop').
 	Repos save: (ASDEKategorie name: 'Elektronik' andType: 'shop').
-	Repos save: (ASDEKategorie name: 'Baumarkt' andType: 'shop' ).
-	Repos save: (ASDEKategorie name: 'Textilien' andType: 'shop' ).
-	Repos save: (ASDEKategorie name: 'SecondHand' andType: 'shop' ).
-	Repos save: (ASDEKategorie name: 'Moebel' andType: 'shop' ).
-	Repos save: (ASDEKategorie name: 'Werkzeug' andType: 'shop' ).
+	Repos save: (ASDEKategorie name: 'Baumarkt' andType: 'shop').
+	Repos save: (ASDEKategorie name: 'Textilien' andType: 'shop').
+	Repos save: (ASDEKategorie name: 'SecondHand' andType: 'shop').
+	Repos save: (ASDEKategorie name: 'Moebel' andType: 'shop').
+	Repos save: (ASDEKategorie name: 'Werkzeug' andType: 'shop').
 	Repos
-		save: (ASDEKategorie
-		name: 'Multimedia'
-		andType: 'artikelArtKategorie' ).
+		save: (ASDEKategorie name: 'Multimedia' andType: 'artikelArtKategorie').
 	Repos
-		save: (ASDEKategorie
-		name: 'Computer'
-		andType: 'artikelArtKategorie' ).
+		save: (ASDEKategorie name: 'Computer' andType: 'artikelArtKategorie').
 	Repos
-		save: (ASDEKategorie
-		name: 'ComputerKomponenten'
-		andType: 'artikelArtKategorie' ).
+		save:
+			(ASDEKategorie
+				name: 'ComputerKomponenten'
+				andType: 'artikelArtKategorie').
 	Repos
 		save: (ASDEKategorie name: 'Lampen' andType: 'artikelArtKategorie').
 	Repos

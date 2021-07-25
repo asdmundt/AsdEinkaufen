@@ -4,6 +4,11 @@ Class {
 	#category : #'AsdEinkaufen-WebApplication-Components'
 }
 
+{ #category : #initalize }
+ASDEHeaderCustomer >> initialize [
+	super initialize
+]
+
 { #category : #accessing }
 ASDEHeaderCustomer >> possiblePages [
 	self session isLogged

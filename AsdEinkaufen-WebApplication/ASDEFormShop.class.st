@@ -1,6 +1,6 @@
 Class {
 	#name : #ASDEFormShop,
-	#superclass : #ASDEForm,
+	#superclass : #ASDForm,
 	#instVars : [
 		'titelLabel',
 		'titleTextLabel',
@@ -145,6 +145,7 @@ ASDEFormShop >> renderFieldsOn: html [
 	"self renderCssFileOn: html."
 	self renderNameOn: html.
 	self renderAusliefernJITOn: html.
+	self renderLogoBildOn: html.
 	self renderCategoryOn: html
 ]
 
@@ -152,6 +153,14 @@ ASDEFormShop >> renderFieldsOn: html [
 ASDEFormShop >> renderFormContentOn: html [
 	self renderFieldsOn: html.
 
+]
+
+{ #category : #rendering }
+ASDEFormShop >> renderLogoBildOn: html [
+	html
+		render:
+			(ASDImageCropUploadComponent modelObject: self model logoBild
+				)	
 ]
 
 { #category : #rendering }

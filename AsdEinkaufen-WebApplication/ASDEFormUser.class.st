@@ -1,6 +1,6 @@
 Class {
 	#name : #ASDEFormUser,
-	#superclass : #ASDEForm,
+	#superclass : #ASDForm,
 	#instVars : [
 		'cancelLabel',
 		'passwordLabel',

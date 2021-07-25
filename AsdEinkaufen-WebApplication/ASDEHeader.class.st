@@ -7,8 +7,29 @@ I am the reader of the application.
 Class {
 	#name : #ASDEHeader,
 	#superclass : #ASDEComponent,
+	#instVars : [
+		'foldButton'
+	],
 	#category : #'AsdEinkaufen-WebApplication-Components'
 }
+
+{ #category : #accessing }
+ASDEHeader >> foldButton [
+	^ foldButton
+]
+
+{ #category : #accessing }
+ASDEHeader >> foldButton: anObject [
+	foldButton := anObject
+]
+
+{ #category : #initialize }
+ASDEHeader >> initialize [
+	super initialize.
+	self
+		foldButton: (MDLFoldButton for: '#' , 'rightPanel--right-panel') fold;
+		yourself
+]
 
 { #category : #accessing }
 ASDEHeader >> possiblePages [
@@ -28,18 +49,15 @@ ASDEHeader >> renderAccountButtonOn: html [
 			html mdlMenu
 				bottomRight;
 				for: #bottomLeftButton;
-				with: [ html div 
-					style: 'width: 50px; height:50px;';
-					with: [ html text: 'test' ] ] ]
+				with: [ html div
+						style: 'width: 250px; height:650px;';
+						with: [ html text: 'test' ] ] ]
 ]
 
 { #category : #rendering }
 ASDEHeader >> renderButtonsOn: html [
 	self session isLogged
-		ifTrue: [ 
-			html
-		mdlNavigation: [
-			self renderAccountButtonOn: html ]]
+		ifTrue: [ html mdlNavigation: [ html render: self foldButton..self renderAccountButtonOn: html ] ]
 ]
 
 { #category : #rendering }

@@ -23,6 +23,6 @@ ASDEAdminProductsPage >> renderContentOn: html [
 		with: [ html mdlCell
 				stretch;
 				middle;
-				size: 12;
-				with: [  ] ]
+				size: 8;
+				with: [ html text: 'khjkhkhjh' ] ]
 ]

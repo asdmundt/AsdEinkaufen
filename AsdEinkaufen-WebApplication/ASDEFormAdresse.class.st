@@ -1,6 +1,6 @@
 Class {
 	#name : #ASDEFormAdresse,
-	#superclass : #ASDEForm,
+	#superclass : #ASDForm,
 	#instVars : [
 		'strLabel',
 		'hsnrLabel',

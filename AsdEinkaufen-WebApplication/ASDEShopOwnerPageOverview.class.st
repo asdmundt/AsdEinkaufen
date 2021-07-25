@@ -66,6 +66,20 @@ ASDEShopOwnerPageOverview >> renderContentOn: html [
 ]
 
 { #category : #rendering }
+ASDEShopOwnerPageOverview >> renderShopOn: html [
+	" "
+
+	| shopForm |
+	shopForm := ASDEFormShop withModel: self shop.
+	html
+		render:
+			(shopForm
+				callback: [ :model | 
+					self session model storeObject: model.
+					self rootComponent goToShopView ])
+]
+
+{ #category : #rendering }
 ASDEShopOwnerPageOverview >> renderTaskOn: html [
 	html mdlCard
 		shadow: 2;

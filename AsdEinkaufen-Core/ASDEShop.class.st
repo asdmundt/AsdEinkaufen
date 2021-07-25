@@ -70,6 +70,26 @@ ASDEShop >> descriptionContainer [
 		yourself
 ]
 
+{ #category : #'magritte-accessing' }
+ASDEShop >> descriptionLogoBild [
+	<magritteDescription>
+	^ ASDMAExternalFileDescription new
+		accessor: #logoBild;
+			componentClass: ASDMAExternalFileUploadComponent;
+		yourself
+]
+
+{ #category : #'magritte-accessing' }
+ASDEShop >> descriptionTitel [
+	<magritteDescription>
+	^ MAStringDescription new
+		accessor: #titel;
+		required: true;
+		label: 'Titel';
+		componentClass: MDLMATextInputComponent;
+		yourself
+]
+
 { #category : #accessing }
 ASDEShop >> fileId [
 	^ fileId

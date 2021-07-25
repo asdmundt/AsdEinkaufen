@@ -14,7 +14,8 @@ Class {
 		'benutzerName',
 		'addresse',
 		'type',
-		'types'
+		'types',
+		'instReady'
 	],
 	#category : #'AsdEinkaufen-Core-Model'
 }
@@ -220,10 +221,20 @@ ASDEUser >> initialize [
 	self logged: false.
 	self admin: false.
 	self indexLoggedUser: nil.
-	
+	self  instReady: false.
 	types := OrderedCollection
 		newFrom: {#admin . #costumer . #shopOwner . #employee}.
 	self type: #costumer
+]
+
+{ #category : #accessing }
+ASDEUser >> instReady [
+	^ instReady
+]
+
+{ #category : #accessing }
+ASDEUser >> instReady: anObject [
+	instReady := anObject
 ]
 
 { #category : #testing }
@@ -234,6 +245,11 @@ ASDEUser >> isAdmin [
 { #category : #testing }
 ASDEUser >> isLogged [
 	^ self logged
+]
+
+{ #category : #testing }
+ASDEUser >> isinstReady [
+	^ self instReady 
 ]
 
 { #category : #accessing }

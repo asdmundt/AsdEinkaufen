@@ -92,6 +92,14 @@ ASDArtikel >> descrUrl: anObject [
 	descrUrl := anObject
 ]
 
+{ #category : #'magritte-accessing' }
+ASDArtikel >> descriptionLieferant [
+	<magritteDescription>
+	^ MAStringDescription new
+		accessor: #lieferant;
+		yourself
+]
+
 { #category : #accessing }
 ASDArtikel >> ekPreis [
 	^ ekPreis

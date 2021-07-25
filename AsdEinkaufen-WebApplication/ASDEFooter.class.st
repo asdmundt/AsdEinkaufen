@@ -7,7 +7,7 @@ A footer for the application with all the useful links.
 Class {
 	#name : #ASDEFooter,
 	#superclass : #ASDEComponent,
-	#category : #'AsdEinkaufen-WebApplication-Core'
+	#category : #'AsdEinkaufen-WebApplication-Components'
 }
 
 { #category : #accessing }

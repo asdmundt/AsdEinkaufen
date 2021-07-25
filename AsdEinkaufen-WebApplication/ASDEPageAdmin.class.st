@@ -54,7 +54,7 @@ ASDEPageAdmin >> displayComponent: anObject [
 { #category : #initialization }
 ASDEPageAdmin >> initialize [
 	super initialize.
-	
+	self session rootComponent header: ASDEHeaderAdmin new
 ]
 
 { #category : #accessing }
