@@ -44,7 +44,7 @@ ASDERootComponent class >> development [
 ASDERootComponent class >> initialize [
 	self environment
 		at: #WADevelopmentConfiguration
-		ifPresent: [ :class | WAAdmin applicationDefaults removeParent: class instance ].	"Remove development tools."
+		ifPresent: [ :class | WAAdmin applicationDefaults addParent: class instance ].	"Remove development tools."
 	^ (WAAdmin register: self asApplicationAt: 'EinkaufenInFrankfurt')
 		preferenceAt: #sessionClass put: ASDESession;
 		addLibrary: JQDeploymentLibrary;
@@ -52,7 +52,6 @@ ASDERootComponent class >> initialize [
 		addLibrary: TMCEFileLibrary;
 		addLibrary: ASDELibrary;
 		addLibrary: MDLLibrary;
-		
 		yourself
 ]
 
@@ -80,6 +79,11 @@ ASDERootComponent class >> open [
 				ifFound: [ :anAdaptor | port := anAdaptor server port ]
 				ifNone: [ (ZnZincServerAdaptor port: (port := 8085)) start ] ].
 	WebBrowser openOn: 'http://localhost:' , port asString , '/AsdEinkaufenBackend'
+]
+
+{ #category : #versions }
+ASDERootComponent class >> version [
+	^ '0.0.58'
 ]
 
 { #category : #hooks }

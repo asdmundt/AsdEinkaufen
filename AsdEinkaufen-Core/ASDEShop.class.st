@@ -16,20 +16,20 @@ Class {
 	#category : #'AsdEinkaufen-Core-Model'
 }
 
-{ #category : #'instance creation' }
-ASDEShop class >> dataModel: anObject userId: anInteger [
-	^ self new
-	dataModel: anObject;
-		userId: anInteger;
-		yourself
-]
-
 { #category : #voyage }
 ASDEShop class >> isVoyageRoot [
 	"Indicates that instances of this class are top level documents
     in noSQL databases"
 
 	^ true
+]
+
+{ #category : #'instance creation' }
+ASDEShop class >> userId: anInteger [
+	^ self new
+		
+		userId: anInteger;
+		yourself
 ]
 
 { #category : #accessing }

@@ -109,13 +109,16 @@ ASDEDbModelPortal >> addLoggedUser: aUser [
 
 { #category : #operations }
 ASDEDbModelPortal >> artCategories [
-	^ ASDEKategorie selectMany: [ :each | each type = 'artikelArtKategorie' ]
+	^ Repos
+		selectMany: ASDEKategorie
+		where: [ :each | each type = 'artikelArtKategorie' ]
 ]
 
 { #category : #operations }
 ASDEDbModelPortal >> artikelCategories [
-	^ ASDEKategorie
-		selectMany: [ :each | each type = 'artikelKategorie' ]
+	^ Repos
+		selectMany: ASDEKategorie
+		where: [ :each | each type = 'artikelKategorie' ]
 ]
 
 { #category : #operations }
@@ -145,8 +148,9 @@ ASDEDbModelPortal >> loggedUsers: anObject [
 
 { #category : #operations }
 ASDEDbModelPortal >> oberCategories [
-	^ ASDEKategorie
-		selectMany: [ :each | each type = 'artikelOberKategorie' ]
+	^ Repos
+		selectMany: ASDEKategorie
+		where: [ :each | each type = 'artikelOberKategorie' ]
 ]
 
 { #category : #operations }

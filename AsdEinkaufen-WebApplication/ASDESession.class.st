@@ -22,7 +22,8 @@ Class {
 		'loginError',
 		'adminView',
 		'userId',
-		'modelErp'
+		'modelErp',
+		'shop'
 	],
 	#category : #'AsdEinkaufen-WebApplication-Utils'
 }
@@ -110,6 +111,16 @@ ASDESession >> rootComponent [
 { #category : #accessing }
 ASDESession >> rootComponent: aRootComponent [
 	rootComponent := aRootComponent
+]
+
+{ #category : #accessing }
+ASDESession >> shop [
+	^ shop
+]
+
+{ #category : #accessing }
+ASDESession >> shop: anObject [
+	shop := anObject
 ]
 
 { #category : #accessing }

@@ -21,9 +21,15 @@ ASDEFooter >> links [
 
 { #category : #rendering }
 ASDEFooter >> renderContentOn: html [
-	html
-		mdlMiniFooter: [ html
-				mdlMiniFooterLeftSection: [ html mdlLogo: 'AsdEinkaufen'.
+	html mdlMiniFooter
+		style: 'position:absolute;left: 0px;bottom: 0px;width: 100%;';
+		with: [ html
+				mdlMiniFooterLeftSection: [ self rootComponent class development
+						ifTrue: [ html
+								mdlLogo:
+									'EinkaufenInFrankfurt' , '      Version   '
+										, self rootComponent class version ]
+						ifFalse: [ html mdlLogo: 'EinkaufenInFrankfurt'].
 					html
 						mdlMiniFooterLinkList: [ self links
 								keysAndValuesDo: [ :label :url | 
@@ -33,5 +39,5 @@ ASDEFooter >> renderContentOn: html [
 												with: label ] ] ] ].
 			html
 				mdlMiniFooterRightSection: [ html
-						mdlMiniFooterLinkList: [ html listItem: [ html text: 'Contact: oo' ] ] ] ]
+						mdlMiniFooterLinkList: [ html listItem: [ html text: 'Contact: TODO' ] ] ] ]
 ]
